@@ -1,7 +1,7 @@
 name: dart_source_builder
 description: A new flutter plugin project.
-version: 1.0.0
-publish_to: https://dart.cloudsmith.io/nyx/dart_utilities/
+version: 0.0.1
+publish_to: 'none'
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -12,14 +12,12 @@ dependencies:
   dart_style: ^2.3.2
   glob: ^2.1.2
   recase:
-    hosted: https://dart.cloudsmith.io/nyx/dart_utilities/
-    version: ^1.0.0
+    path: ../recase
   build: ^2.4.1
   build_runner: ^2.4.6
   build_runner_core: ^7.2.10
   dart_extensions:
-    hosted: https://dart.cloudsmith.io/nyx/dart_utilities/
-    version: ^1.0.0
+    path: ../dart_extensions
   io: ^1.0.4
   logging: ^1.2.0
   path: ^1.8.3
