@@ -1,0 +1,10 @@
+.vscode/
+.idea/
+.dart_tool/
+build/
+example/
+test/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+pubspec.lock
