@@ -1,0 +1,34 @@
+---
+alwaysApply: true
+---
+
+# Test Management Rule
+
+**Do not update or run tests unless explicitly requested by the user.**
+
+When making code changes:
+- Only modify test files if the user specifically asks to update tests
+- Do not run tests automatically after making changes
+- Do not suggest running tests unless asked
+- Focus on implementation code changes without test modifications
+
+If tests need to be updated or run, wait for explicit user instruction such as:
+- "update the tests"
+- "run the tests"
+- "fix the failing tests"
+- "write tests for this"
+# Test Management Rule
+
+**Do not update or run tests unless explicitly requested by the user.**
+
+When making code changes:
+- Only modify test files if the user specifically asks to update tests
+- Do not run tests automatically after making changes
+- Do not suggest running tests unless asked
+- Focus on implementation code changes without test modifications
+
+If tests need to be updated or run, wait for explicit user instruction such as:
+- "update the tests"
+- "run the tests"
+- "fix the failing tests"
+- "write tests for this"

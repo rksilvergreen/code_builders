@@ -1,0 +1,29 @@
+---
+description: Controlled versioned merge to main with proper branching strategy
+globs: ["**/pubspec.yaml", "**/main.dart"]
+alwaysApply: true
+---
+
+# Merge to Main Rule
+
+When the user says "merge to main" or something similar, always:
+
+1. **Require version specification**: The command must include version in format "merge to main X.Y.Z" (major.minor.patch)
+2. **If version not provided**: 
+   - Check current version in pubspec.yaml
+   - Ask user for the target version
+   - Inform user of current version
+3. **Version validation**:
+   - Verify pubspec.yaml version matches requested version
+   - If not matching, update pubspec.yaml
+4. **Branch validation**:
+   - Ensure NOT on main branch
+   - Confirm on develop branch or offshoot of develop
+5. **Merge workflow**:
+   - Commit and push current changes (If there is anything to commit)
+   - If on develop offshoot: merge to develop, push develop
+   - Merge develop to main, push main
+   - Tag main branch with version (vX.Y.Z format)
+   - Return to original branch
+
+This ensures controlled versioned merges to main with proper branching strategy.

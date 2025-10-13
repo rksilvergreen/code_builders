@@ -1,0 +1,47 @@
+# Git Repository Initialization Rule
+
+When the user asks to "init a git repository", "initialize git", or similar commands, always:
+
+1. **Check for existing repository**:
+   - Run `git status` or check for `.git` directory
+   - If repository already exists, notify the user and stop
+   - Provide information about the existing repository (current branch, remote, etc.)
+
+2. **Determine repository name**:
+   - Use the project/directory name by default
+   - If user specified a name, use that instead
+
+3. **Initialize local repository**:
+   - Run `git init`
+   - Create initial commit (if needed)
+
+4. **Create branch structure**:
+   - Ensure main branch exists (rename master to main if needed)
+   - Create develop branch from main
+   - Checkout develop branch
+
+5. **Create remote repository**:
+   - Create a new GitHub repository with the same name (using appropriate tools/API)
+   - Add remote as 'origin'
+   - Push both main and develop branches to remote
+
+6. **Final state**:
+   - Ensure we're on the develop branch
+   - Confirm both main and develop branches exist locally and remotely
+   - Display summary of created repository and branches
+
+## Example workflow:
+```bash
+git init
+git branch -M main
+git add .
+git commit -m "Initial commit"
+git branch develop
+git checkout develop
+# Create remote repository
+git remote add origin <repo-url>
+git push -u origin main
+git push -u origin develop
+```
+
+This ensures a consistent git workflow with proper branching strategy from the start.
