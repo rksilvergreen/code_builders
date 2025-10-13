@@ -247,7 +247,7 @@ class DartSourceBuilder extends Builder {
         _inputValidators = inputValidators ?? ['**/*.dart'],
         _buildExtensions = buildExtensions ??
             {
-              '{{dir}}/{{file}}.dart': ['{{dir}}/gen/{{file}}.gen.${name.snakeCase}.dart']
+              '{{dir}}/{{file}}.dart': ['{{dir}}/gen/{{file}}.gen.${ReCase(name).snakeCase}.dart']
             },
         _outputAssetFunction = outputAssetFunction ?? ((List<AssetId> expectedOutputs) => expectedOutputs[0]),
         // _outputPathFun = outputPath ??

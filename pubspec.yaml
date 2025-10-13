@@ -11,8 +11,7 @@ dependencies:
   analyzer: ^6.0.0
   dart_style: ^2.3.2
   glob: ^2.1.2
-  recase:
-    path: ../recase
+  recase: ^4.1.0
   build: ^2.4.1
   build_runner: ^2.4.6
   build_runner_core: ^7.2.10
