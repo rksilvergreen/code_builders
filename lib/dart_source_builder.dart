@@ -272,7 +272,7 @@ class DartSourceBuilder extends Builder {
   /// file paths during the build process.
   @override
   Map<String, List<String>> get buildExtensions => _buildExtensions;
-
+//
   /// Gets the output [AssetId] for a given input asset.
   ///
   /// Uses the [_outputAssetFunction] to select from the expected outputs
@@ -333,6 +333,7 @@ class DartSourceBuilder extends Builder {
     AssetId inputId = buildStep.inputId;
     if (!_validate(inputId)) return;
     AssetId outputId = _getOutputAssetId(inputId);
+    print('[Dart Source Builder] [${_name}] inputId: $inputId');
     LibraryElement libraryElement = await buildStep.inputLibrary;
     final StringBuffer b = StringBuffer();
     _writeGenMessage(b);
