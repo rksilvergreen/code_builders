@@ -1,5 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
-import 'element_extension.dart';
+part of dart_source_builder;
 
 extension InterfaceElementExtension on InterfaceElement {
   List<ConstructorElement> getConstructorsAnnotatedWith<T>({bool withTypeParams = false}) =>

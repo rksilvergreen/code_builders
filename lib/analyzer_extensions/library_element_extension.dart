@@ -1,5 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
-import 'element_extension.dart';
+part of dart_source_builder;
 
 extension LibraryElementExtension on LibraryElement {
   List<ClassElement> get classes => units.expand((u) => u.classes).toList();

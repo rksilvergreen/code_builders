@@ -1,15 +1,13 @@
-import 'package:analyzer/dart/constant/value.dart';
-import '../../dart_object_extension.dart';
-import '../car_annotaions/car.dart';
+part of dart_source_builder;
 
 extension CarDartObjectExtension on DartObject {
-  Car? getCar() => getValue(this, [carDartObjectConverter]) as Car?;
+  Car? getCar() => getValue(this) as Car?;
 
-  Engine? getEngine() => getValue(this, [engineDartObjectConverter]) as Engine?;
+  Engine? getEngine() => getValue(this) as Engine?;
 
-  Wheels? getWheels() => getValue(this, [wheelsDartObjectConverter]) as Wheels?;
+  Wheels? getWheels() => getValue(this) as Wheels?;
 
-  Maintenance? getMaintenance() => getValue(this, [maintenanceDartObjectConverter]) as Maintenance?;
+  Maintenance? getMaintenance() => getValue(this) as Maintenance?;
 }
 
 DartObjectConverter<Car> carDartObjectConverter = DartObjectConverter<Car>((dartObject) => Car(

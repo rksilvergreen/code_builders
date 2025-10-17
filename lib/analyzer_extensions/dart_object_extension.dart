@@ -1,12 +1,6 @@
-
-import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
-import 'package:analyzer/dart/constant/value.dart';
-import 'dart_object_converter.dart';
+part of dart_source_builder;
 
 extension DartObjectExtension on DartObject {
-  // bool isType<T>({bool withTypeParams = false}) => type!.isType<T>(withTypeParams: withTypeParams);
-
   bool hasField(String field) => getField(field) != null;
 
   dynamic getFieldValue(String fieldName, [List<DartObjectConverter> DartObjectConverters = const []]) {
@@ -50,19 +44,24 @@ dynamic getValue(DartObject dartObject) {
     value = value.map((k, v) => MapEntry(getValue(k), getValue(v)));
   }
 
-  if (dartObject.type!.element is EnumElement) {
-    throw StateError('DartObject is not an enum');
-  }
-
   if (value == null) {
     DartType type = dartObject.type!;
     try {
-      DartObjectConverter dartObjectConverter = DartObjectExtension._dartObjectConverters.entries
-          .firstWhere((entry) => entry.key.toString() == type.element!.name)
-          .value;
+      DartObjectConverter dartObjectConverter = DartObjectExtension._dartObjectConverters.entries.firstWhere((entry) {
+        // print('entry.key.toString(): ${entry.key.toString()} (${entry.key.toString().length})');
+        // print('type.element!.name: ${type.element!.name} (${type.element!.name!.length})');
+        // print('entry.key.toString() == type.element!.name: ${entry.key.toString() == type.element!.name}');
+        return entry.key.toString() == type.element!.name;
+      }).value;
+      // print(1);
       value = dartObjectConverter.convert(dartObject);
-    } on StateError {
-      throw StateError('DartObjectConverter not found for type ${type.element!.name}');
+      // print(2);
+    } catch (e) {
+      // print('e!!!!!!!!!!!: $e');
+      if (e is StateError) {
+        throw 'DartObjectConverter not found for type ${type.element!.name}';
+      } else
+        throw e;
     }
   }
   return value;

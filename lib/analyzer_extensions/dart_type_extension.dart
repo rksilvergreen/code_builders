@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/type.dart';
+part of dart_source_builder;
 
 extension DartTypeExtension on DartType {
   bool isType<T>({bool withTypeParams = false}) {

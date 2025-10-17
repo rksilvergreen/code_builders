@@ -1,0 +1,4 @@
+targets:
+  $default:
+    builders:
+      message_creator_gen|message_creator: {}

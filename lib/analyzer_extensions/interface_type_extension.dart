@@ -1,6 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
-import 'dart_type_extension.dart';
+part of dart_source_builder;
 
 extension InterfaceTypeExtensions on InterfaceType {
   List<InterfaceType> get extendedInterfaces {

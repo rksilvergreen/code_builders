@@ -1,3 +1,5 @@
+part of dart_source_builder;
+
 class Car {
   final String name;
   final int year;
@@ -37,5 +39,3 @@ enum WheelsType {
   aluminum,
   carbon,
 }
-
-Duration x;

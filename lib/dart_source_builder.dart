@@ -45,16 +45,22 @@ import 'dart:async';
 import 'package:build/build.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/dart/constant/value.dart';
 import 'package:path/path.dart' as p;
 import 'package:dart_style/dart_style.dart';
 import 'package:dart_extensions/dart_extensions.dart';
-import 'analyzer_extensions/dart_object_converter.dart';
-import 'analyzer_extensions/dart_object_extension.dart';
 
-
+part  'analyzer_extensions/dart_object_converter.dart';
+part  'analyzer_extensions/dart_object_extension.dart';
+part  'analyzer_extensions/dart_type_extension.dart';
+part  'analyzer_extensions/element_extension.dart';
+part  'analyzer_extensions/function_typed_element_extension.dart';
+part  'analyzer_extensions/interface_element_extension.dart';
+part  'analyzer_extensions/interface_type_extension.dart';
+part  'analyzer_extensions/library_element_extension.dart';
 
 part 'buffer_writable/directives/uri_reference.dart';
-
 part 'buffer_writable/directives/directive.dart';
 part 'buffer_writable/directives/export.dart';
 part 'buffer_writable/directives/import.dart';
@@ -72,6 +78,9 @@ part 'buffer_writable/extension.dart';
 part 'buffer_writable/mixin.dart';
 part 'buffer_writable/global_function.dart';
 part 'buffer_writable/global_variable.dart';
+
+part 'analyzer_extensions/example/car_annotaions/car.dart';
+part 'analyzer_extensions/example/car_gen/car_gen.dart';
 
 /// The main build function that generates code content for a single input file.
 ///
@@ -245,8 +254,8 @@ class DartSourceBuilder extends Builder {
         _autoFormat = autoFormat,
         _formatter = formatter ?? DartFormatter(pageWidth: 100),
         _build = build {
-          DartObjectExtension._dartObjectConverters.addAll(dartObjectConverters);
-        }
+    DartObjectExtension._dartObjectConverters.addAll(dartObjectConverters);
+  }
 
   /// Returns the build extensions map that defines input to output file mappings.
   ///
@@ -275,7 +284,7 @@ class DartSourceBuilder extends Builder {
     final StringBuffer finalBuffer = StringBuffer();
     _writeGenMessage(finalBuffer);
     finalBuffer.write(strBufferResult.toString());
-    
+
     String str = _autoFormat ? _formatter.format(finalBuffer.toString()) : finalBuffer.toString();
     AssetId outputId = buildStep.allowedOutputs.first;
     await buildStep.writeAsString(outputId, str);

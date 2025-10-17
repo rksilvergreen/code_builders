@@ -1,5 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
-import 'element_extension.dart';
+part of dart_source_builder;
 
 extension FunctionTypedElementExtension on FunctionTypedElement {
 

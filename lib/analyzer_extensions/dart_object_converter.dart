@@ -1,5 +1,4 @@
-import 'package:analyzer/dart/constant/value.dart';
-import 'dart_object_extension.dart';
+part of dart_source_builder;
 
 class DartObjectConverter<T> {
   final Type type = T;
@@ -11,3 +10,12 @@ class DartObjectConverter<T> {
 DartObjectConverter<Duration> durationDartObjectConverter = DartObjectConverter<Duration>((dartObject) => Duration(
       microseconds: dartObject.getFieldValue('_duration') as int,
     ));
+
+enum Color {
+  red,
+  green,
+  blue,
+}
+
+DartObjectConverter<Color> colorDartObjectConverter =
+    DartObjectConverter<Color>((dartObject) => Color.values.firstWhere((e) => e.name == dartObject.toString()));

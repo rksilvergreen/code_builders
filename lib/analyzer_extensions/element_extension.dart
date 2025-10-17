@@ -1,8 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
-import 'package:analyzer/dart/constant/value.dart';
-import 'dart_type_extension.dart';
-import 'dart_object_extension.dart';
+part of dart_source_builder;
 
 extension ElementExtension on Element {
   bool isAnnotated<T>({bool withTypeParams = false}) => metadata.any((elementAnnotation) {

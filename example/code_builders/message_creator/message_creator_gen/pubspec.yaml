@@ -1,0 +1,15 @@
+name: message_creator_gen
+version: 1.0.0
+publish_to: "none"
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  message_creator_annotations:
+    path: ../message_creator_annotations
+  build: ^2.4.1
+  dart_source_builder:
+    path: ../../../../
+  example:
+    path: ../../../
