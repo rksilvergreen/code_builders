@@ -1,4 +1,4 @@
-part of code_builder;
+part of code_builders;
 
 extension DartObjectExtension on DartObject {
   bool hasField(String field) => getField(field) != null;

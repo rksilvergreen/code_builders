@@ -1,4 +1,4 @@
-part of code_builder;
+part of code_builders;
 
 /// Represents a Dart mixin declaration with full support for all mixin features.
 ///

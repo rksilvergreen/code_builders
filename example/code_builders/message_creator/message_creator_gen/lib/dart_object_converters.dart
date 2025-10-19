@@ -1,4 +1,4 @@
-import 'package:code_builder/code_builder.dart';
+import 'package:code_builders/code_builder.dart';
 import 'package:message_creator_annotations/annotations.dart';
 // DartObjectConverters for annotation classes
 // extension MessageDartObjectExtension on DartObject {

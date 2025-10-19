@@ -1,4 +1,4 @@
-part of code_builder;
+part of code_builders;
 
 /// Represents a Dart `export` directive for re-exporting symbols from other libraries.
 ///

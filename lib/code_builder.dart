@@ -15,7 +15,7 @@
 /// ## Usage
 ///
 /// ```dart
-/// final builder = DartSourceBuilder(
+/// final builder = CodeBuilder(
 ///   name: 'my_generator',
 ///   buildExtensions: {
 ///     'lib/models/*.dart': ['lib/generated/*.g.dart']
@@ -38,7 +38,7 @@
 /// Default pattern: `{{dir}}/gen/{{file}}.gen.{{name}}.dart`
 ///
 /// Supports placeholders: `{{dir}}`, `{{file}}`, `{{name}}`
-library code_builder;
+library code_builders;
 
 import 'dart:collection';
 import 'dart:async';
@@ -51,14 +51,14 @@ import 'package:path/path.dart' as p;
 import 'package:dart_style/dart_style.dart';
 import 'package:dart_extensions/dart_extensions.dart';
 
-part  'analyzer_extensions/dart_object_converter.dart';
-part  'analyzer_extensions/dart_object_extension.dart';
-part  'analyzer_extensions/dart_type_extension.dart';
-part  'analyzer_extensions/element_extension.dart';
-part  'analyzer_extensions/function_typed_element_extension.dart';
-part  'analyzer_extensions/interface_element_extension.dart';
-part  'analyzer_extensions/interface_type_extension.dart';
-part  'analyzer_extensions/library_element_extension.dart';
+part 'analyzer_extensions/dart_object_converter.dart';
+part 'analyzer_extensions/dart_object_extension.dart';
+part 'analyzer_extensions/dart_type_extension.dart';
+part 'analyzer_extensions/element_extension.dart';
+part 'analyzer_extensions/function_typed_element_extension.dart';
+part 'analyzer_extensions/interface_element_extension.dart';
+part 'analyzer_extensions/interface_type_extension.dart';
+part 'analyzer_extensions/library_element_extension.dart';
 
 part 'buffer_writable/directives/uri_reference.dart';
 part 'buffer_writable/directives/directive.dart';
@@ -146,7 +146,7 @@ typedef BuildFunction = Future<StringBuffer?> Function(BuildStep buildStep);
 /// ### Basic Builder
 ///
 /// ```dart
-/// final builder = DartSourceBuilder(
+/// final builder = CodeBuilder(
 ///   name: 'my_generator',
 ///   buildExtensions: {
 ///     'lib/models/*.dart': ['lib/generated/*.g.dart']
@@ -162,7 +162,7 @@ typedef BuildFunction = Future<StringBuffer?> Function(BuildStep buildStep);
 /// ### Builder with Directives
 ///
 /// ```dart
-/// final builder = DartSourceBuilder(
+/// final builder = CodeBuilder(
 ///   name: 'json_serializer',
 ///   buildExtensions: {
 ///     'lib/models/*.dart': ['lib/generated/*.json.dart']
@@ -179,7 +179,7 @@ typedef BuildFunction = Future<StringBuffer?> Function(BuildStep buildStep);
 /// ### Part File Builder
 ///
 /// ```dart
-/// final builder = DartSourceBuilder(
+/// final builder = CodeBuilder(
 ///   name: 'part_generator',
 ///   buildExtensions: {
 ///     'lib/main.dart': ['lib/main.g.dart']
@@ -190,7 +190,7 @@ typedef BuildFunction = Future<StringBuffer?> Function(BuildStep buildStep);
 ///   },
 /// );
 /// ```
-class DartSourceBuilder extends Builder {
+class CodeBuilder extends Builder {
   final String _name;
   final Map<String, List<String>> _buildExtensions;
   final bool _genMessage;
@@ -198,7 +198,7 @@ class DartSourceBuilder extends Builder {
   final DartFormatter _formatter;
   final BuildFunction _build;
 
-  /// Creates a new [DartSourceBuilder] with the specified configuration.
+  /// Creates a new [CodeBuilder] with the specified configuration.
   ///
   /// ## Required Parameters
   ///
@@ -222,7 +222,7 @@ class DartSourceBuilder extends Builder {
   /// ## Example
   ///
   /// ```dart
-  /// final builder = DartSourceBuilder(
+  /// final builder = CodeBuilder(
   ///   name: 'json_serializer',
   ///   buildExtensions: {
   ///     'lib/models/*.dart': ['lib/generated/*.json.dart']
@@ -240,7 +240,7 @@ class DartSourceBuilder extends Builder {
   ///
   /// - [AssertionError] if [name] is empty or [buildExtensions] is empty
   /// - [AssertionError] if both [partOf] and library directives are provided
-  DartSourceBuilder({
+  CodeBuilder({
     required String name,
     required Map<String, List<String>> buildExtensions,
     bool genMessage = true,

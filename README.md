@@ -14,7 +14,7 @@ This library extends the [build] package to simplify code generation by providin
 ## Usage
 
 ```dart
-final builder = DartSourceBuilder(
+final builder = CodeBuilder(
   name: 'my_generator',
   buildExtensions: {
     'lib/models/*.dart': ['lib/generated/*.g.dart']
@@ -33,5 +33,5 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  code_builder: ^0.1.0
+  code_builders: ^0.1.0
 ```

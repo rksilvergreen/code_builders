@@ -1,4 +1,4 @@
-part of code_builder;
+part of code_builders;
 
 /// Base class for all Dart directive statements (import, export, part, part of).
 ///

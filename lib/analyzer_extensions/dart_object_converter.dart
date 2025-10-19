@@ -1,4 +1,4 @@
-part of code_builder;
+part of code_builders;
 
 class DartObjectConverter<T> {
   final Type type = T;

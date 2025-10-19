@@ -1,4 +1,4 @@
-part of code_builder;
+part of code_builders;
 
 extension InterfaceElementExtension on InterfaceElement {
   List<ConstructorElement> getConstructorsAnnotatedWith<T>({bool withTypeParams = false}) =>

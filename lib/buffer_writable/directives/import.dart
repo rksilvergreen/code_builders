@@ -1,4 +1,4 @@
-part of code_builder;
+part of code_builders;
 
 /// Represents a Dart `import` directive for including external libraries and files.
 ///

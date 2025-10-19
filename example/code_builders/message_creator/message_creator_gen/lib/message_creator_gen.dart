@@ -1,11 +1,12 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:code_builder/code_builder.dart';
+import 'package:code_builders/code_builder.dart';
 import 'package:message_creator_annotations/annotations.dart';
 import 'dart_object_converters.dart';
 import 'package:example/main.dart';
+
 ////
-Builder messageCreatorBuilder(BuilderOptions options) => DartSourceBuilder(
+Builder messageCreatorBuilder(BuilderOptions options) => CodeBuilder(
       name: 'message_creator',
       buildExtensions: {
         '{{dir}}/{{file}}.dart': ['{{dir}}/.gen/{{file}}.gen.message_creator.dart']
@@ -40,7 +41,8 @@ Builder messageCreatorBuilder(BuilderOptions options) => DartSourceBuilder(
             final getterName = '${className}Message';
 
             // Check if class implements Peelable
-            final implementsPeelable = classElement.interfaces.any((interface) => interface.element.name == '${Peelable}');
+            final implementsPeelable =
+                classElement.interfaces.any((interface) => interface.element.name == '${Peelable}');
 
             // Generate message content
             String messageContent;

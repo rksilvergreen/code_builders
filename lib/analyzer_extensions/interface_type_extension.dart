@@ -1,4 +1,4 @@
-part of code_builder;
+part of code_builders;
 
 extension InterfaceTypeExtensions on InterfaceType {
   List<InterfaceType> get extendedInterfaces {

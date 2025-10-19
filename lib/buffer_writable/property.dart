@@ -1,4 +1,4 @@
-part of code_builder;
+part of code_builders;
 
 class Property implements BufferWritable {
   /// The documentation comment for this property.

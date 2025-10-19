@@ -1,4 +1,4 @@
-part of code_builder;
+part of code_builders;
 
 abstract class BufferWritable {
   void _writeToBuffer(StringBuffer b);

@@ -1,4 +1,4 @@
-part of code_builder;
+part of code_builders;
 
 /// Enum representing the primary class modifiers introduced in Dart 3.0.
 ///

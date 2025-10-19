@@ -1,4 +1,4 @@
-part of code_builder;
+part of code_builders;
 
 /// Represents a URI reference used in Dart directive statements.
 ///

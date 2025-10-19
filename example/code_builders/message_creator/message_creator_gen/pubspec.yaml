@@ -9,7 +9,7 @@ dependencies:
   message_creator_annotations:
     path: ../message_creator_annotations
   build: ^2.4.1
-  code_builder:
+  code_builders:
     path: ../../../../
   example:
     path: ../../../
