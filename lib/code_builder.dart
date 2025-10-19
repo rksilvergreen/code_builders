@@ -51,6 +51,11 @@ import 'package:path/path.dart' as p;
 import 'package:dart_style/dart_style.dart';
 import 'package:dart_extensions/dart_extensions.dart';
 
+export 'package:analyzer/dart/element/element.dart';
+export 'package:analyzer/dart/constant/value.dart';
+export 'package:analyzer/dart/element/type.dart';
+export 'package:build/build.dart';
+
 part 'analyzer_extensions/dart_object_converter.dart';
 part 'analyzer_extensions/dart_object_extension.dart';
 part 'analyzer_extensions/dart_type_extension.dart';

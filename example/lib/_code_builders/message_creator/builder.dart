@@ -1,17 +1,16 @@
-import 'package:analyzer/dart/element/element.dart';
-import 'package:build/build.dart';
 import 'package:code_builders/code_builder.dart';
-import 'package:message_creator_annotations/annotations.dart';
-import 'dart_object_converters.dart';
+import 'annotations.dart';
 import 'package:example/main.dart';
 
-////
+part 'converters.dart';
+
+/////
 Builder messageCreatorBuilder(BuilderOptions options) => CodeBuilder(
       name: 'message_creator',
       buildExtensions: {
         '{{dir}}/{{file}}.dart': ['{{dir}}/.gen/{{file}}.gen.message_creator.dart']
       },
-      dartObjectConverters: dartObjectConverters,
+      dartObjectConverters: _dartObjectConverters,
       build: (buildStep) async {
         LibraryElement library = await buildStep.resolver.libraryFor(buildStep.inputId);
 

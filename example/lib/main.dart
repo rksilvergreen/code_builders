@@ -1,4 +1,4 @@
-import 'package:message_creator_annotations/annotations.dart';
+import 'package:example/_code_builders/message_creator/annotations.dart';
 
 abstract class Fruit {}
 

@@ -1,4 +1,18 @@
 targets:
   $default:
     builders:
-      message_creator_gen|message_creator: {}
+      example|message_creator: {
+        generate_for: ["lib/main.dart"]
+      }
+
+builders:
+  message_creator:
+    import: "package:example/_code_builders/message_creator/builder.dart"
+    builder_factories: ["messageCreatorBuilder"]
+    build_extensions:
+      {
+        "{{dir}}/{{file}}.dart":
+          ["{{dir}}/gen/{{file}}.gen.message_creator.dart"],
+      }
+    auto_apply: none
+    build_to: source

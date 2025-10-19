@@ -1,0 +1,5 @@
+---
+alwaysApply: true
+---
+Im creating 3 new cursor rules that should be imported by packages that wish to use this code_builders package. 
+the @code-builders-start.mdc rule should describe that if the user asks to start/init/implement code builders in this package the do the following (If any of the following is already in place then make sure it is indeed done correctly:

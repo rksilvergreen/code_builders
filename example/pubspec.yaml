@@ -5,12 +5,7 @@ publish_to: "none"
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
-dependencies:
-  message_creator_annotations:
-    path: code_builders/message_creator/message_creator_annotations
-
 dev_dependencies:
   build_runner: ^2.4.0
-  message_creator_gen:
-    path: code_builders/message_creator/message_creator_gen
-  
+  code_builders:
+    path: ../
