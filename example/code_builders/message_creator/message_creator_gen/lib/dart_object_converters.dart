@@ -1,4 +1,4 @@
-import 'package:dart_source_builder/dart_source_builder.dart';
+import 'package:code_builder/code_builder.dart';
 import 'package:message_creator_annotations/annotations.dart';
 // DartObjectConverters for annotation classes
 // extension MessageDartObjectExtension on DartObject {
@@ -21,14 +21,21 @@ DartObjectConverter<Extra> extraDartObjectConverter = DartObjectConverter<Extra>
       suffix: dartObject.getFieldValue('suffix') as String,
     ));
 
+DartObjectConverter<Signature> signatureDartObjectConverter = DartObjectConverter<Signature>((dartObject) => Signature(
+      name: dartObject.getFieldValue('name') as String,
+      isApproved: dartObject.getFieldValue('isApproved') as bool,
+    ));
+
 DartObjectConverter<Message> messageDartObjectConverter = DartObjectConverter<Message>((dartObject) => Message(
       duplicates: dartObject.getFieldValue('duplicates') as int,
       format: dartObject.getFieldValue('format', [messageFormatDartObjectConverter]) as MessageFormat,
       extra: dartObject.getFieldValue('extra', [extraDartObjectConverter]) as Extra?,
+      signatures: dartObject.getFieldValue('signatures', [signatureDartObjectConverter]).cast<Signature>(),
     ));
 
 final dartObjectConverters = {
   MessageFormat: messageFormatDartObjectConverter,
   Extra: extraDartObjectConverter,
+  Signature: signatureDartObjectConverter,
   Message: messageDartObjectConverter,
 };

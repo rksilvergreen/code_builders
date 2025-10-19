@@ -1,4 +1,4 @@
-name: dart_source_builder
+name: code_builder
 description: A new flutter plugin project.
 version: 0.1.0
 publish_to: "none"

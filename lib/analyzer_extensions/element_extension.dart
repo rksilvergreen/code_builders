@@ -1,4 +1,4 @@
-part of dart_source_builder;
+part of code_builder;
 
 extension ElementExtension on Element {
   bool isAnnotated<T>({bool withTypeParams = false}) => metadata.any((elementAnnotation) {
@@ -18,11 +18,11 @@ extension ElementExtension on Element {
       .cast<DartObject>()
       .toList();
 
-  List<dynamic> getAllAnnotations() => getAllAnnotationDartObjects().map((dartObject) => getValue(dartObject)).toList();
+  List<dynamic> getAllAnnotations() => getAllAnnotationDartObjects().map((dartObject) => dartObject.getValue()).toList();
 
   List<T> getAllAnnotationsOf<T>({bool withTypeParameters = false}) =>
       getAllAnnotationDartObjectsOf<T>(withTypeParameters: withTypeParameters)
-          .map((dartObject) => getValue(dartObject))
+          .map((dartObject) => dartObject.getValue())
           .cast<T>()
           .toList();
 

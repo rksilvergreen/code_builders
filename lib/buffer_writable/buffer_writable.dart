@@ -1,4 +1,4 @@
-part of dart_source_builder;
+part of code_builder;
 
 abstract class BufferWritable {
   void _writeToBuffer(StringBuffer b);

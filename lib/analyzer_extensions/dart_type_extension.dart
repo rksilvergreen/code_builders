@@ -1,4 +1,4 @@
-part of dart_source_builder;
+part of code_builder;
 
 extension DartTypeExtension on DartType {
   bool isType<T>({bool withTypeParams = false}) {

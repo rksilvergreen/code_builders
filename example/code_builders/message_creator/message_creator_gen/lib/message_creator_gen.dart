@@ -1,15 +1,14 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:dart_source_builder/dart_source_builder.dart';
+import 'package:code_builder/code_builder.dart';
 import 'package:message_creator_annotations/annotations.dart';
 import 'dart_object_converters.dart';
 import 'package:example/main.dart';
-
-/////////
+////
 Builder messageCreatorBuilder(BuilderOptions options) => DartSourceBuilder(
       name: 'message_creator',
       buildExtensions: {
-        '{{dir}}/{{file}}.dart': ['{{dir}}/gen/{{file}}.gen.message_creator.dart']
+        '{{dir}}/{{file}}.dart': ['{{dir}}/.gen/{{file}}.gen.message_creator.dart']
       },
       dartObjectConverters: dartObjectConverters,
       build: (buildStep) async {
@@ -36,6 +35,7 @@ Builder messageCreatorBuilder(BuilderOptions options) => DartSourceBuilder(
           ],
           getters: messageClasses.map((classElement) {
             final message = classElement.getAnnotationOf<Message>()!;
+
             final className = classElement.name;
             final getterName = '${className}Message';
 

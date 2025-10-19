@@ -1,4 +1,4 @@
-part of dart_source_builder;
+part of code_builder;
 
 class Property implements BufferWritable {
   /// The documentation comment for this property.

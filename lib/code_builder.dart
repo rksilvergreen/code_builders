@@ -38,7 +38,7 @@
 /// Default pattern: `{{dir}}/gen/{{file}}.gen.{{name}}.dart`
 ///
 /// Supports placeholders: `{{dir}}`, `{{file}}`, `{{name}}`
-library dart_source_builder;
+library code_builder;
 
 import 'dart:collection';
 import 'dart:async';

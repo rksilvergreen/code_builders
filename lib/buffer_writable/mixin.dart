@@ -1,4 +1,4 @@
-part of dart_source_builder;
+part of code_builder;
 
 /// Represents a Dart mixin declaration with full support for all mixin features.
 ///

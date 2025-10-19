@@ -1,4 +1,4 @@
-part of dart_source_builder;
+part of code_builder;
 
 /// Represents a Dart `part` directive for splitting a library across multiple files.
 ///

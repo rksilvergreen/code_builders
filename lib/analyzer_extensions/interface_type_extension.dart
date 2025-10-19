@@ -1,4 +1,4 @@
-part of dart_source_builder;
+part of code_builder;
 
 extension InterfaceTypeExtensions on InterfaceType {
   List<InterfaceType> get extendedInterfaces {

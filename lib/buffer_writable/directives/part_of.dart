@@ -1,4 +1,4 @@
-part of dart_source_builder;
+part of code_builder;
 
 /// Represents a Dart `part of` directive that declares a file as part of a library.
 ///

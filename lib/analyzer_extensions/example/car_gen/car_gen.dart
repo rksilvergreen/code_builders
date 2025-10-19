@@ -1,14 +1,14 @@
-part of dart_source_builder;
+part of code_builder;
 
-extension CarDartObjectExtension on DartObject {
-  Car? getCar() => getValue(this) as Car?;
+// extension CarDartObjectExtension on DartObject {
+//   Car? getCar() => getValue(this) as Car?;
 
-  Engine? getEngine() => getValue(this) as Engine?;
+//   Engine? getEngine() => getValue(this) as Engine?;
 
-  Wheels? getWheels() => getValue(this) as Wheels?;
+//   Wheels? getWheels() => getValue(this) as Wheels?;
 
-  Maintenance? getMaintenance() => getValue(this) as Maintenance?;
-}
+//   Maintenance? getMaintenance() => getValue(this) as Maintenance?;
+// }
 
 DartObjectConverter<Car> carDartObjectConverter = DartObjectConverter<Car>((dartObject) => Car(
       name: dartObject.getFieldValue('name') as String,
