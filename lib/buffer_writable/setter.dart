@@ -223,15 +223,14 @@ class Setter implements BufferWritable {
   /// final setter = await Setter.from(element, buildStep);
   /// ```
   static Future<Setter> from(
-    PropertyAccessorElement setterElement,
+    SetterElement setterElement,
     BuildStep buildStep,
   ) async {
-    assert(setterElement.isSetter, 'The PropertyAccessorElement [${setterElement.name}] is not a setter');
-    MethodDeclaration astNode = await buildStep.resolver.astNodeFor(setterElement) as MethodDeclaration;
+    MethodDeclaration astNode = await buildStep.resolver.astNodeFor(setterElement.firstFragment) as MethodDeclaration;
 
     // Collect all annotations
     List<String> annotations = [];
-    for (var annotation in setterElement.metadata) {
+    for (var annotation in setterElement.metadata.annotations) {
       if (annotation.isOverride) {
         annotations.add('@override');
       } else {
@@ -250,15 +249,15 @@ class Setter implements BufferWritable {
         docComment: docComment,
         external: setterElement.isExternal,
         static: setterElement.isStatic,
-        name: setterElement.name,
-        parameter: await SetterParameter.from(setterElement.parameters.first, buildStep),
+        name: setterElement.name!,
+        parameter: await SetterParameter.from(setterElement.formalParameters.first, buildStep),
         arrowFunction: astNode.body is ExpressionFunctionBody,
         body: (astNode.body is EmptyFunctionBody)
             ? null
             : (StringBuffer b) {
                 FunctionBody body = astNode.body;
                 if (body is BlockFunctionBody)
-                  b.write(body.block.statements.toCleanString());
+                  b.write(body.block.statements.join(' '));
                 else if (body is ExpressionFunctionBody) b.write('${body.expression}');
               });
   }
@@ -509,12 +508,12 @@ class SetterParameter implements BufferWritable {
   /// final param = await SetterParameter.from(paramElement, buildStep);
   /// ```
   static Future<SetterParameter> from(
-    ParameterElement parameterElement,
+    FormalParameterElement parameterElement,
     BuildStep buildStep,
   ) async =>
       SetterParameter(
         type: '${parameterElement.type}',
-        name: parameterElement.name,
+        name: parameterElement.name!,
         covariant: parameterElement.isCovariant,
       );
 

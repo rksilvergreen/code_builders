@@ -418,23 +418,21 @@ class Mixin extends PublicBufferWritable {
   ) async {
     return Mixin(
       docComment: mixinElement.documentationComment,
-      annotations: mixinElement.metadata.map((e) => e.toSource()).toList(),
+      annotations: mixinElement.metadata.annotations.map((e) => e.toSource()).toList(),
       base: mixinElement.isBase,
-      name: mixinElement.name,
+      name: mixinElement.name!,
       typeParameters: mixinElement.typeParameters.isEmpty
           ? null
           : mixinElement.typeParameters.map((tp) {
-              String? bound = tp.bound != null ? tp.bound.toString() : null;
-              return TypeParameter(tp.name, bound);
+              String? bound = tp.bound != null ? tp.bound!.toString() : null;
+              return TypeParameter(tp.name!, bound);
             }).toList(),
-      on: mixinElement.superclassConstraints.map((e) => e.element.name).toList(),
-      implementations: mixinElement.interfaces.map((e) => e.element.name).toList(),
-      properties: await mixinElement.fields.mapAsync((e) => Property.from(e, buildStep)),
-      getters:
-          await mixinElement.accessors.where((e) => e.isGetter).toList().mapAsync((e) => Getter.from(e, buildStep)),
-      setters:
-          await mixinElement.accessors.where((e) => e.isSetter).toList().mapAsync((e) => Setter.from(e, buildStep)),
-      methods: await mixinElement.methods.mapAsync((e) => Method.from(e, buildStep)),
+      on: mixinElement.superclassConstraints.map((e) => e.element.name!).toList(),
+      implementations: mixinElement.interfaces.map((e) => e.element.name!).toList(),
+      properties: [for (final e in mixinElement.fields) await Property.from(e, buildStep)],
+      getters: [for (final e in mixinElement.getters) await Getter.from(e, buildStep)],
+      setters: [for (final e in mixinElement.setters) await Setter.from(e, buildStep)],
+      methods: [for (final e in mixinElement.methods) await Method.from(e, buildStep)],
     );
   }
 

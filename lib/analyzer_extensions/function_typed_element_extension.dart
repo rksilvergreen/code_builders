@@ -56,8 +56,8 @@ extension FunctionTypedElementExtension on FunctionTypedElement {
   ///   }
   /// }
   /// ```
-  List<ParameterElement> getParametersAnnotatedWith<T>({bool withTypeParams = false}) =>
-      parameters.where((parameter) => parameter.isAnnotated<T>(withTypeParams: withTypeParams)).toList();
+  List<FormalParameterElement> getParametersAnnotatedWith<T>({bool withTypeParams = false}) =>
+      formalParameters.where((parameter) => parameter.isAnnotated<T>(withTypeParams: withTypeParams)).toList();
 
   /// Gets all type parameters that have an annotation of type [T].
   ///

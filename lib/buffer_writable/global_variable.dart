@@ -280,7 +280,7 @@ class GlobalVariable extends PublicBufferWritable {
         late: topLevelVariableElement.isLate,
         external: topLevelVariableElement.isExternal,
         type: '${topLevelVariableElement.type}',
-        name: topLevelVariableElement.name,
+        name: topLevelVariableElement.name!,
         defaultValue: null,
       );
 

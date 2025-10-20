@@ -254,18 +254,12 @@ class Extension extends PublicBufferWritable {
   ) async =>
       Extension(
         docComment: extensionElement.documentationComment,
-        annotations: extensionElement.metadata.map((e) => e.toSource()).toList(),
+        annotations: extensionElement.metadata.annotations.map((e) => e.toSource()).toList(),
         extensionName: extensionElement.name,
         extendedType: '${extensionElement.extendedType}',
-        getters: await extensionElement.accessors
-            .where((e) => e.isGetter)
-            .toList()
-            .mapAsync((e) => Getter.from(e, buildStep)),
-        setters: await extensionElement.accessors
-            .where((e) => e.isSetter)
-            .toList()
-            .mapAsync((e) => Setter.from(e, buildStep)),
-        methods: await extensionElement.methods.mapAsync((e) => Method.from(e, buildStep)),
+        getters: [for (final e in extensionElement.getters) await Getter.from(e, buildStep)],
+        setters: [for (final e in extensionElement.setters) await Setter.from(e, buildStep)],
+        methods: [for (final e in extensionElement.methods) await Method.from(e, buildStep)],
       );
 
   /// Creates a copy of this [Extension] with some properties replaced.

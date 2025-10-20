@@ -202,26 +202,27 @@ class GlobalFunction extends PublicBufferWritable {
   /// Returns a [Future] that completes with a new [GlobalFunction] instance
   /// that mirrors the analyzed function.
   static Future<GlobalFunction> from(
-    FunctionElement functionElement,
+    TopLevelFunctionElement functionElement,
     BuildStep buildStep,
   ) async {
-    FunctionDeclaration astNode = await buildStep.resolver.astNodeFor(functionElement) as FunctionDeclaration;
+    FunctionDeclaration astNode =
+        await buildStep.resolver.astNodeFor(functionElement.firstFragment) as FunctionDeclaration;
     return GlobalFunction(
         external: functionElement.isExternal,
         returnType: '${functionElement.returnType}',
-        name: functionElement.name,
-        parameters: await functionElement.parameters.mapAsync((p) => FunctionParameter.from(p, buildStep)),
+        name: functionElement.name!,
+        parameters: [for (final p in functionElement.formalParameters) await FunctionParameter.from(p, buildStep)],
         genericTypes: functionElement.typeParameters.map((p) => '$p').toList(),
         multiLineParameters: true,
-        async: functionElement.isAsynchronous,
-        generator: functionElement.isGenerator,
+        async: functionElement.firstFragment.isAsynchronous,
+        generator: functionElement.firstFragment.isGenerator,
         arrowFunction: astNode.functionExpression.body is ExpressionFunctionBody,
         body: (astNode.functionExpression.body is EmptyFunctionBody)
             ? (StringBuffer b) => ''
             : (StringBuffer b) {
                 FunctionBody body = astNode.functionExpression.body;
                 if (body is BlockFunctionBody)
-                  b.write(body.block.statements.toCleanString());
+                  b.write(body.block.statements.join(' '));
                 else if (body is ExpressionFunctionBody) b.write('${body.expression}');
               });
   }
@@ -308,7 +309,7 @@ class GlobalFunction extends PublicBufferWritable {
     if (external) b.write('external ');
     if (returnType != null) b.write('${returnType} ');
     b.write('${name}');
-    if (genericTypes != null) b.write('<${genericTypes!.toCleanString(',')}>');
+    if (genericTypes != null) b.write('<${genericTypes!.join(',')}>');
 
     b.write('(');
 
@@ -520,12 +521,12 @@ class FunctionParameter implements BufferWritable {
   /// Returns a [Future] that completes with a new [FunctionParameter] instance
   /// that mirrors the analyzed parameter.
   static Future<FunctionParameter> from(
-    ParameterElement parameterElement,
+    FormalParameterElement parameterElement,
     BuildStep buildStep,
   ) async {
-    FormalParameter astNode = await buildStep.resolver.astNodeFor(parameterElement) as FormalParameter;
+    FormalParameter astNode = await buildStep.resolver.astNodeFor(parameterElement.firstFragment) as FormalParameter;
     return FunctionParameter(
-      name: parameterElement.name,
+      name: parameterElement.name!,
       named: parameterElement.isNamed,
       required: parameterElement.isRequiredNamed,
       optional: parameterElement.isOptionalPositional,

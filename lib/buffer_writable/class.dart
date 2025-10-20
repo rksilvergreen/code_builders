@@ -709,28 +709,25 @@ class Class extends PublicBufferWritable {
 
     return Class(
       docComment: classElement.documentationComment,
-      annotations: classElement.metadata.map((e) => e.toSource()).toList(),
+      annotations: classElement.metadata.annotations.map((e) => e.toSource()).toList(),
       abstract: classElement.isAbstract && modifier != ClassModifier.sealed, // Don't mark sealed as abstract
       modifier: modifier,
       mixinClass: classElement.isMixinClass,
-      name: classElement.name,
+      name: classElement.name!,
       typeParameters: classElement.typeParameters.isEmpty
           ? null
           : classElement.typeParameters.map((tp) {
-              String? bound = tp.bound != null ? tp.bound.toString() : null;
-              return TypeParameter(tp.name, bound);
+              String? bound = tp.bound != null ? tp.bound!.toString() : null;
+              return TypeParameter(tp.name!, bound);
             }).toList(),
       superclass: classElement.supertype?.element.name != 'Object' ? classElement.supertype?.element.name : null,
-      mixins: classElement.mixins.map((e) => e.element.name).toList(),
-      implementations: classElement.interfaces.map((e) => e.element.name).toList(),
-      properties: await classElement.fields.mapAsync((e) => Property.from(e, buildStep)),
-      getters:
-          await classElement.accessors.where((e) => e.isGetter).toList().mapAsync((e) => Getter.from(e, buildStep)),
-      setters:
-          await classElement.accessors.where((e) => e.isSetter).toList().mapAsync((e) => Setter.from(e, buildStep)),
-      constructors:
-          await classElement.constructors.mapAsync<Constructor>((e) async => await Constructor.from(e, buildStep)),
-      methods: await classElement.methods.mapAsync((e) => Method.from(e, buildStep)),
+      mixins: classElement.mixins.map((e) => e.element.name!).toList(),
+      implementations: classElement.interfaces.map((e) => e.element.name!).toList(),
+      properties: [for (final e in classElement.fields) await Property.from(e, buildStep)],
+      getters: [for (final e in classElement.getters) await Getter.from(e, buildStep)],
+      setters: [for (final e in classElement.setters) await Setter.from(e, buildStep)],
+      constructors: [for (final e in classElement.constructors) await Constructor.from(e, buildStep)],
+      methods: [for (final e in classElement.methods) await Method.from(e, buildStep)],
     );
   }
 

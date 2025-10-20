@@ -271,7 +271,8 @@ class Constructor implements BufferWritable {
     ConstructorElement constructorElement,
     BuildStep buildStep,
   ) async {
-    ConstructorDeclaration astNode = await buildStep.resolver.astNodeFor(constructorElement) as ConstructorDeclaration;
+    ConstructorDeclaration astNode =
+        await buildStep.resolver.astNodeFor(constructorElement.firstFragment) as ConstructorDeclaration;
 
     // Extract documentation comment
     String? docComment;
@@ -286,18 +287,20 @@ class Constructor implements BufferWritable {
         Const: constructorElement.isConst,
         factory: constructorElement.isFactory,
         external: constructorElement.isExternal,
-        className: constructorElement.enclosingElement.name,
+        className: constructorElement.enclosingElement.name!,
         constructorName: constructorElement.name,
-        parameters: await constructorElement.parameters.mapAsync((e) => ConstructorParameter.from(e, buildStep)),
+        parameters: [
+          for (final e in constructorElement.formalParameters) await ConstructorParameter.from(e, buildStep)
+        ],
         multiLineParameters: true,
-        assertionInitializers: await astNode.initializers
-            .whereType<AssertInitializer>()
-            .toList()
-            .mapAsync((e) => AssertionInitializer.from(e, buildStep)),
-        propertyInitializers: await astNode.initializers
-            .whereType<ConstructorFieldInitializer>()
-            .toList()
-            .mapAsync((e) => PropertyInitializer.from(e, buildStep)),
+        assertionInitializers: [
+          for (final e in astNode.initializers.whereType<AssertInitializer>())
+            await AssertionInitializer.from(e, buildStep)
+        ],
+        propertyInitializers: [
+          for (final e in astNode.initializers.whereType<ConstructorFieldInitializer>())
+            await PropertyInitializer.from(e, buildStep)
+        ],
         superInitializer: astNode.initializers.whereType<SuperConstructorInvocation>().isNotEmpty
             ? await SuperInitializer.from(astNode.initializers.whereType<SuperConstructorInvocation>().first, buildStep)
             : null,
@@ -309,7 +312,7 @@ class Constructor implements BufferWritable {
             ? null
             : (StringBuffer b) {
                 BlockFunctionBody body = astNode.body as BlockFunctionBody;
-                b.write(body.block.statements.toCleanString());
+                b.write(body.block.statements.join(' '));
               },
         docComment: docComment,
         annotations: annotations);
@@ -623,11 +626,11 @@ class ConstructorParameter implements BufferWritable {
   ///
   /// Returns a fully populated [ConstructorParameter] matching the source parameter.
   static Future<ConstructorParameter> from(
-    ParameterElement parameterElement,
+    FormalParameterElement parameterElement,
     BuildStep buildStep,
   ) async =>
       ConstructorParameter(
-        name: parameterElement.name,
+        name: parameterElement.name!,
         named: parameterElement.isNamed,
         Required: parameterElement.isRequiredNamed,
         optional: parameterElement.isOptionalPositional,
@@ -966,8 +969,10 @@ class SuperInitializer extends ConstructorInitializer {
   ) async =>
       SuperInitializer(
         name: '${superConstructorInvocation.constructorName}',
-        arguments: await superConstructorInvocation.argumentList.arguments
-            .mapAsync((e) => SuperInitializerArgument.from(e, buildStep)),
+        arguments: [
+          for (final e in superConstructorInvocation.argumentList.arguments)
+            await SuperInitializerArgument.from(e, buildStep)
+        ],
         multiLineArguments: true,
       );
 

@@ -254,15 +254,14 @@ class Getter implements BufferWritable {
   /// final getter = await Getter.from(element, buildStep);
   /// ```
   static Future<Getter> from(
-    PropertyAccessorElement getterElement,
+    GetterElement getterElement,
     BuildStep buildStep,
   ) async {
-    assert(getterElement.isGetter, 'The PropertyAccessorElement [${getterElement.name}] is not a getter');
-    MethodDeclaration astNode = await buildStep.resolver.astNodeFor(getterElement) as MethodDeclaration;
+    MethodDeclaration astNode = await buildStep.resolver.astNodeFor(getterElement.firstFragment) as MethodDeclaration;
 
     // Collect all annotations
     List<String> annotations = [];
-    for (var annotation in getterElement.metadata) {
+    for (var annotation in getterElement.metadata.annotations) {
       if (annotation.isOverride) {
         annotations.add('@override');
       } else {
@@ -282,16 +281,16 @@ class Getter implements BufferWritable {
         external: getterElement.isExternal,
         static: getterElement.isStatic,
         type: '${getterElement.returnType}',
-        name: getterElement.name,
-        async: getterElement.isAsynchronous,
-        generator: getterElement.isGenerator,
+        name: getterElement.name!,
+        async: getterElement.firstFragment.isAsynchronous,
+        generator: getterElement.firstFragment.isGenerator,
         arrowFunction: astNode.body is ExpressionFunctionBody,
         body: (astNode.body is EmptyFunctionBody)
             ? null
             : (StringBuffer b) {
                 FunctionBody body = astNode.body;
                 if (body is BlockFunctionBody)
-                  b.write(body.block.statements.toCleanString());
+                  b.write(body.block.statements.join(' '));
                 else if (body is ExpressionFunctionBody) b.write('${body.expression}');
               });
   }

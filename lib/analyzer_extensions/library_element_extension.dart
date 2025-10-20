@@ -52,7 +52,7 @@ extension LibraryElementExtension on LibraryElement {
   ///   print('Class: ${classElement.name}');
   /// }
   /// ```
-  List<ClassElement> get classes => units.expand((u) => u.classes).toList();
+  List<ClassElement> get classes => fragments.expand((f) => f.classes).map((c) => c.element).toList();
 
   /// Gets all classes that have an annotation of type [T].
   ///
@@ -77,8 +77,11 @@ extension LibraryElementExtension on LibraryElement {
   ///   }
   /// }
   /// ```
-  List<ClassElement> getAllClassesAnnotatedWith<T>() =>
-      units.expand((u) => u.classes.where((classElement) => classElement.isAnnotated<T>())).toList();
+  List<ClassElement> getAllClassesAnnotatedWith<T>() => fragments
+      .expand((f) => f.classes)
+      .map((c) => c.element)
+      .where((classElement) => classElement.isAnnotated<T>())
+      .toList();
 
   /// Gets all mixins in this library across all compilation units.
   ///
@@ -97,7 +100,7 @@ extension LibraryElementExtension on LibraryElement {
   ///   print('Mixin: ${mixinElement.name}');
   /// }
   /// ```
-  List<MixinElement> get mixins => units.expand((u) => u.mixins).toList();
+  List<MixinElement> get mixins => fragments.expand((f) => f.mixins).map((m) => m.element).toList();
 
   /// Gets all mixins that have an annotation of type [T].
   ///
@@ -122,8 +125,11 @@ extension LibraryElementExtension on LibraryElement {
   ///   }
   /// }
   /// ```
-  List<MixinElement> getAllMixinsAnnotatedWith<T>() =>
-      units.expand((u) => u.mixins.where((mixinElement) => mixinElement.isAnnotated<T>())).toList();
+  List<MixinElement> getAllMixinsAnnotatedWith<T>() => fragments
+      .expand((f) => f.mixins)
+      .map((m) => m.element)
+      .where((mixinElement) => mixinElement.isAnnotated<T>())
+      .toList();
 
   /// Gets all extensions in this library across all compilation units.
   ///
@@ -142,7 +148,7 @@ extension LibraryElementExtension on LibraryElement {
   ///   print('Extension: ${extensionElement.name}');
   /// }
   /// ```
-  List<ExtensionElement> get extensions => units.expand((u) => u.extensions).toList();
+  List<ExtensionElement> get extensions => fragments.expand((f) => f.extensions).map((e) => e.element).toList();
 
   /// Gets all extensions that have an annotation of type [T].
   ///
@@ -167,8 +173,11 @@ extension LibraryElementExtension on LibraryElement {
   ///   }
   /// }
   /// ```
-  List<ExtensionElement> getAllExtensionsAnnotatedWith<T>() =>
-      units.expand((u) => u.extensions.where((extensionElement) => extensionElement.isAnnotated<T>())).toList();
+  List<ExtensionElement> getAllExtensionsAnnotatedWith<T>() => fragments
+      .expand((f) => f.extensions)
+      .map((e) => e.element)
+      .where((extensionElement) => extensionElement.isAnnotated<T>())
+      .toList();
 
   /// Gets all enums in this library across all compilation units.
   ///
@@ -187,7 +196,7 @@ extension LibraryElementExtension on LibraryElement {
   ///   print('Enum: ${enumElement.name}');
   /// }
   /// ```
-  List<EnumElement> get enums => units.expand((u) => u.enums).toList();
+  List<EnumElement> get enums => fragments.expand((f) => f.enums).map((e) => e.element).toList();
 
   /// Gets all enums that have an annotation of type [T].
   ///
@@ -212,8 +221,11 @@ extension LibraryElementExtension on LibraryElement {
   ///   }
   /// }
   /// ```
-  List<EnumElement> getAllEnumsAnnotatedWith<T>() =>
-      units.expand((u) => u.enums.where((enumElement) => enumElement.isAnnotated<T>())).toList();
+  List<EnumElement> getAllEnumsAnnotatedWith<T>() => fragments
+      .expand((f) => f.enums)
+      .map((e) => e.element)
+      .where((enumElement) => enumElement.isAnnotated<T>())
+      .toList();
 
   /// Gets all top-level functions in this library across all compilation units.
   ///
@@ -232,7 +244,7 @@ extension LibraryElementExtension on LibraryElement {
   ///   print('Function: ${functionElement.name}');
   /// }
   /// ```
-  List<FunctionElement> get functions => units.expand((u) => u.functions).toList();
+  List<TopLevelFunctionElement> get functions => fragments.expand((f) => f.functions).map((fn) => fn.element).toList();
 
   /// Gets all top-level functions that have an annotation of type [T].
   ///
@@ -257,8 +269,11 @@ extension LibraryElementExtension on LibraryElement {
   ///   }
   /// }
   /// ```
-  List<FunctionElement> getAllFunctionsAnnotatedWith<T>() =>
-      units.expand((u) => u.functions.where((functionElement) => functionElement.isAnnotated<T>())).toList();
+  List<TopLevelFunctionElement> getAllFunctionsAnnotatedWith<T>() => fragments
+      .expand((f) => f.functions)
+      .map((fn) => fn.element)
+      .where((functionElement) => functionElement.isAnnotated<T>())
+      .toList();
 
   /// Gets all top-level variables in this library across all compilation units.
   ///
@@ -277,7 +292,8 @@ extension LibraryElementExtension on LibraryElement {
   ///   print('Variable: ${variableElement.name}');
   /// }
   /// ```
-  List<TopLevelVariableElement> get topLevelVariables => units.expand((u) => u.topLevelVariables).toList();
+  List<TopLevelVariableElement> get topLevelVariables =>
+      fragments.expand((f) => f.topLevelVariables).map((v) => v.element).toList();
 
   /// Gets all top-level variables that have an annotation of type [T].
   ///
@@ -302,6 +318,9 @@ extension LibraryElementExtension on LibraryElement {
   ///   }
   /// }
   /// ```
-  List<TopLevelVariableElement> getAllTopLevelVariablesAnnotatedWith<T>() =>
-      units.expand((u) => u.topLevelVariables.where((variableElement) => variableElement.isAnnotated<T>())).toList();
+  List<TopLevelVariableElement> getAllTopLevelVariablesAnnotatedWith<T>() => fragments
+      .expand((f) => f.topLevelVariables)
+      .map((v) => v.element)
+      .where((variableElement) => variableElement.isAnnotated<T>())
+      .toList();
 }

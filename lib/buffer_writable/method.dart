@@ -401,11 +401,11 @@ class Method implements BufferWritable {
     MethodElement methodElement,
     BuildStep buildStep,
   ) async {
-    MethodDeclaration astNode = await buildStep.resolver.astNodeFor(methodElement) as MethodDeclaration;
+    MethodDeclaration astNode = await buildStep.resolver.astNodeFor(methodElement.firstFragment) as MethodDeclaration;
 
     // Collect all annotations
     List<String> annotations = [];
-    for (var annotation in methodElement.metadata) {
+    for (var annotation in methodElement.metadata.annotations) {
       if (annotation.isOverride) {
         annotations.add('@override');
       } else {
@@ -426,19 +426,19 @@ class Method implements BufferWritable {
         override: false, // Already captured in annotations
         static: methodElement.isStatic,
         returnType: '${methodElement.returnType}',
-        name: methodElement.name,
-        parameters: await methodElement.parameters.mapAsync((p) => MethodParameter.from(p, buildStep)),
+        name: methodElement.name!,
+        parameters: [for (final p in methodElement.formalParameters) await MethodParameter.from(p, buildStep)],
         genericTypes: methodElement.typeParameters.map((p) => '$p').toList(),
         multiLineParameters: true,
-        async: methodElement.isAsynchronous,
-        generator: methodElement.isGenerator,
+        async: methodElement.firstFragment.isAsynchronous,
+        generator: methodElement.firstFragment.isGenerator,
         arrowFunction: astNode.body is ExpressionFunctionBody,
         body: (astNode.body is EmptyFunctionBody)
             ? null
             : (StringBuffer b) {
                 FunctionBody body = astNode.body;
                 if (body is BlockFunctionBody)
-                  b.write(body.block.statements.toCleanString());
+                  b.write(body.block.statements.join(' '));
                 else if (body is ExpressionFunctionBody) b.write('${body.expression}');
               });
   }
@@ -594,7 +594,7 @@ class Method implements BufferWritable {
     b.write('${name}');
 
     // Write generic type parameters
-    if (genericTypes != null) b.write('<${genericTypes!.toCleanString(',')}>');
+    if (genericTypes != null) b.write('<${genericTypes!.join(',')}>');
 
     b.write('(');
 
@@ -928,21 +928,21 @@ class MethodParameter implements BufferWritable {
   /// final param = await MethodParameter.from(paramElement, buildStep);
   /// ```
   static Future<MethodParameter> from(
-    ParameterElement parameterElement,
+    FormalParameterElement parameterElement,
     BuildStep buildStep,
   ) async {
-    FormalParameter astNode = await buildStep.resolver.astNodeFor(parameterElement) as FormalParameter;
+    FormalParameter astNode = await buildStep.resolver.astNodeFor(parameterElement.firstFragment) as FormalParameter;
 
     // Collect all annotations
     List<String> annotations = [];
-    for (var annotation in parameterElement.metadata) {
+    for (var annotation in parameterElement.metadata.annotations) {
       annotations.add(annotation.toSource());
     }
 
     return MethodParameter(
       annotations: annotations,
       covariant: parameterElement.isCovariant,
-      name: parameterElement.name,
+      name: parameterElement.name!,
       named: parameterElement.isNamed,
       Required: parameterElement.isRequiredNamed,
       optional: parameterElement.isOptionalPositional,

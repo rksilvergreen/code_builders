@@ -152,9 +152,8 @@ extension InterfaceElementExtension on InterfaceElement {
   ///   }
   /// }
   /// ```
-  List<PropertyAccessorElement> getGettersAnnotatedWith<T>({bool withTypeParams = false}) => accessors
-      .where((accessor) => accessor.isGetter && accessor.isAnnotated<T>(withTypeParams: withTypeParams))
-      .toList();
+  List<GetterElement> getGettersAnnotatedWith<T>({bool withTypeParams = false}) =>
+      getters.where((getter) => getter.isAnnotated<T>(withTypeParams: withTypeParams)).toList();
 
   /// Gets all setters that have an annotation of type [T].
   ///
@@ -183,7 +182,6 @@ extension InterfaceElementExtension on InterfaceElement {
   ///   }
   /// }
   /// ```
-  List<PropertyAccessorElement> getSettersAnnotatedWith<T>({bool withTypeParams = false}) => accessors
-      .where((accessor) => accessor.isSetter && accessor.isAnnotated<T>(withTypeParams: withTypeParams))
-      .toList();
+  List<SetterElement> getSettersAnnotatedWith<T>({bool withTypeParams = false}) =>
+      setters.where((setter) => setter.isAnnotated<T>(withTypeParams: withTypeParams)).toList();
 }

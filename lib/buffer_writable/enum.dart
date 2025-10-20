@@ -604,7 +604,7 @@ class Enum extends PublicBufferWritable {
     EnumElement enumElement,
     BuildStep buildStep,
   ) async {
-    EnumDeclaration astNode = await buildStep.resolver.astNodeFor(enumElement) as EnumDeclaration;
+    EnumDeclaration astNode = await buildStep.resolver.astNodeFor(enumElement.firstFragment) as EnumDeclaration;
 
     // Extract constants with their arguments
     List<EnumConstant> constants = astNode.constants.map((constantDecl) {
@@ -624,20 +624,18 @@ class Enum extends PublicBufferWritable {
 
     return Enum(
       docComment: enumElement.documentationComment,
-      annotations: enumElement.metadata.map((e) => e.toSource()).toList(),
-      name: enumElement.name,
+      annotations: enumElement.metadata.annotations.map((e) => e.toSource()).toList(),
+      name: enumElement.name!,
       constants: constants,
-      mixins: enumElement.mixins.map((e) => e.element.name).toList(),
-      implementations: enumElement.interfaces.map((e) => e.element.name).toList(),
-      properties: await enumElement.fields
-          .where((f) => !f.isEnumConstant) // Exclude the enum constants themselves
-          .toList()
-          .mapAsync((e) => Property.from(e, buildStep)),
-      getters: await enumElement.accessors.where((e) => e.isGetter).toList().mapAsync((e) => Getter.from(e, buildStep)),
-      setters: await enumElement.accessors.where((e) => e.isSetter).toList().mapAsync((e) => Setter.from(e, buildStep)),
-      constructors:
-          await enumElement.constructors.mapAsync<Constructor>((e) async => await Constructor.from(e, buildStep)),
-      methods: await enumElement.methods.mapAsync((e) => Method.from(e, buildStep)),
+      mixins: enumElement.mixins.map((e) => e.element.name!).toList(),
+      implementations: enumElement.interfaces.map((e) => e.element.name!).toList(),
+      properties: [
+        for (final e in enumElement.fields.where((f) => !f.isEnumConstant)) await Property.from(e, buildStep)
+      ],
+      getters: [for (final e in enumElement.getters) await Getter.from(e, buildStep)],
+      setters: [for (final e in enumElement.setters) await Setter.from(e, buildStep)],
+      constructors: [for (final e in enumElement.constructors) await Constructor.from(e, buildStep)],
+      methods: [for (final e in enumElement.methods) await Method.from(e, buildStep)],
     );
   }
 

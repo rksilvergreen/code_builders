@@ -289,8 +289,7 @@ extension InterfaceTypeExtensions on InterfaceType {
   ///   // Type has a getter named 'name'
   /// }
   /// ```
-  bool hasGetter(String name) =>
-      (element as ClassElement).accessors.any((accessor) => accessor.isGetter ? accessor.name == name : false);
+  bool hasGetter(String name) => (element as ClassElement).getters.any((getter) => getter.name == name);
 
   /// Checks if this type has a setter with the specified name.
   ///
@@ -310,8 +309,7 @@ extension InterfaceTypeExtensions on InterfaceType {
   ///   // Type has a setter named 'name'
   /// }
   /// ```
-  bool hasSetter(String name) =>
-      (element as ClassElement).accessors.any((accessor) => accessor.isSetter ? accessor.name == name : false);
+  bool hasSetter(String name) => (element as ClassElement).setters.any((setter) => setter.name == name);
 
   /// Checks if this type has a method with the specified name.
   ///

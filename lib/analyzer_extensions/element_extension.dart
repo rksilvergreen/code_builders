@@ -58,7 +58,7 @@ extension ElementExtension on Element {
   ///   // Element has MyAnnotation<String>
   /// }
   /// ```
-  bool isAnnotated<T>({bool withTypeParams = false}) => metadata.any((elementAnnotation) {
+  bool isAnnotated<T>({bool withTypeParams = false}) => metadata.annotations.any((elementAnnotation) {
         DartType? annotationType = elementAnnotation.computeConstantValue()?.type;
         if (annotationType == null) return false;
         return annotationType.isType<T>(withTypeParams: withTypeParams);
@@ -82,7 +82,7 @@ extension ElementExtension on Element {
   ///   // Process annotation value
   /// }
   /// ```
-  List<DartObject> getAllAnnotationDartObjects() => metadata
+  List<DartObject> getAllAnnotationDartObjects() => metadata.annotations
       .map((elementAnnotation) => elementAnnotation.computeConstantValue())
       .where((dartObject) => dartObject != null)
       .cast<DartObject>()

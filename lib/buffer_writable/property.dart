@@ -117,14 +117,14 @@ class Property implements BufferWritable {
     FieldElement fieldElement,
     BuildStep buildStep,
   ) async {
-    VariableDeclaration astNode = (await buildStep.resolver.astNodeFor(fieldElement) as FieldDeclaration)
+    VariableDeclaration astNode = (await buildStep.resolver.astNodeFor(fieldElement.firstFragment) as FieldDeclaration)
         .fields
         .variables
         .firstWhere((declaration) => declaration.name.stringValue == fieldElement.name);
 
     return Property(
       docComment: fieldElement.documentationComment,
-      annotations: fieldElement.metadata.map((e) => e.toSource()).toList(),
+      annotations: fieldElement.metadata.annotations.map((e) => e.toSource()).toList(),
       static: fieldElement.isStatic,
       Const: fieldElement.isConst,
       Final: fieldElement.isFinal,
@@ -132,7 +132,7 @@ class Property implements BufferWritable {
       covariant: fieldElement.isCovariant,
       external: fieldElement.isExternal,
       type: '${fieldElement.type}',
-      name: fieldElement.name,
+      name: fieldElement.name!,
       defaultValue: '${astNode.initializer}',
     );
   }

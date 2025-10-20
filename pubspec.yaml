@@ -7,17 +7,5 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  args: ^2.4.2
-  analyzer: ^6.0.0
-  dart_style: ^2.3.2
-  glob: ^2.1.2
-  recase: ^4.1.0
-  build: ^2.4.1
-  build_runner: ^2.4.6
-  build_runner_core: ^7.2.10
-  dart_extensions:
-    path: ../dart_extensions
-  io: ^1.0.4
-  logging: ^1.2.0
-  path: ^1.8.3
-  yaml: ^3.1.2
+  build: ^4.0.0
+  dart_style: ^3.1.2

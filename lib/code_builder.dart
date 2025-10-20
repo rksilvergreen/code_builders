@@ -49,7 +49,6 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:path/path.dart' as p;
 import 'package:dart_style/dart_style.dart';
-import 'package:dart_extensions/dart_extensions.dart';
 
 export 'package:analyzer/dart/element/element.dart';
 export 'package:analyzer/dart/constant/value.dart';
@@ -83,9 +82,6 @@ part 'buffer_writable/extension.dart';
 part 'buffer_writable/mixin.dart';
 part 'buffer_writable/global_function.dart';
 part 'buffer_writable/global_variable.dart';
-
-part 'analyzer_extensions/example/car_annotaions/car.dart';
-part 'analyzer_extensions/example/car_gen/car_gen.dart';
 
 /// The main build function that generates code content for a single input file.
 ///
@@ -257,7 +253,7 @@ class CodeBuilder extends Builder {
         _buildExtensions = buildExtensions,
         _genMessage = genMessage,
         _autoFormat = autoFormat,
-        _formatter = formatter ?? DartFormatter(pageWidth: 100),
+        _formatter = formatter ?? DartFormatter(pageWidth: 100, languageVersion: DartFormatter.latestLanguageVersion),
         _build = build {
     DartObjectExtension._dartObjectConverters.addAll(dartObjectConverters);
   }
@@ -317,15 +313,15 @@ class CodeBuilder extends Builder {
 
       b.write('///');
       b.write('#' * len);
-      b.newLine();
+      b.writeln();
       b.write('///');
       b.write('#' * firstPoundsLen);
       b.write(str);
       b.write('#' * lastPoundsLen);
-      b.newLine();
+      b.writeln();
       b.write('///');
       b.write('#' * len);
-      b.newLine();
+      b.writeln();
     }
   }
 }
