@@ -1,18 +1,25 @@
 targets:
   $default:
     builders:
-      example|message_creator: {
-        generate_for: ["lib/main.dart"]
-      }
+      example|copyable: { generate_for: ["lib/copyable_example.dart"] }
+      example|api_endpoint: { generate_for: ["lib/api_example.dart"] }
 
 builders:
-  message_creator:
-    import: "package:example/_code_builders/message_creator/builder.dart"
-    builder_factories: ["messageCreatorBuilder"]
+  copyable:
+    import: "package:example/.code_builders/copyable/builder.dart"
+    builder_factories: ["copyableBuilder"]
+    build_extensions:
+      { "{{dir}}/{{file}}.dart": ["{{dir}}/.gen/{{file}}.gen.copyable.dart"] }
+    auto_apply: none
+    build_to: source
+
+  api_endpoint:
+    import: "package:example/.code_builders/api_endpoint/builder.dart"
+    builder_factories: ["apiEndpointBuilder"]
     build_extensions:
       {
         "{{dir}}/{{file}}.dart":
-          ["{{dir}}/gen/{{file}}.gen.message_creator.dart"],
+          ["{{dir}}/.gen/{{file}}.gen.api_endpoint.dart"],
       }
     auto_apply: none
     build_to: source

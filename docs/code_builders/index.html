@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="code_builders library API docs, for the Dart programming language.">
+  <title>code_builders library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">code_builders</a></li>
+    <li class="self-crumb">code_builder.dart</li>
+  </ol>
+  <div class="self-name">code_builders</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar=""
+    data-below-sidebar="code_builders&#47;code_builders-library-sidebar.html">
+  
+    <div>
+      
+
+      <h1>
+        <span class="kind-library">code_builder</span>
+        library 
+ 
+
+      </h1>
+    </div>
+
+    
+<section class="desc markdown">
+  <p>A code generation library for Dart that provides a flexible framework for
+creating custom builders with the Dart build system.</p>
+<p>This library extends the <a href="https://pub.dev/documentation/build/4.0.2/build">build</a> package to simplify code generation by
+providing utilities for working with directives, creating code structures,
+and managing package dependencies.</p>
+<h2 id="key-features">Key Features</h2>
+<ul>
+<li>Customizable input matching with glob patterns</li>
+<li>Automatic code formatting with dart_style</li>
+<li>Support for imports, exports, parts, and part-of directives</li>
+<li>Generated file headers and error handling</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<pre class="language-dart"><code class="language-dart">final builder = CodeBuilder(
+  name: 'my_generator',
+  buildExtensions: {
+    'lib/models/*.dart': ['lib/generated/*.g.dart']
+  },
+  build: (buildStep) async {
+    final buffer = StringBuffer();
+    buffer.writeln('// Generated code');
+    return buffer;
+  },
+);
+</code></pre>
+<h2 id="file-types">File Types</h2>
+<ul>
+<li><strong>Library files</strong>: Use <code>imports</code>, <code>exports</code>, <code>parts</code> parameters</li>
+<li><strong>Part files</strong>: Use <code>partOf</code> parameter (mutually exclusive with library directives)</li>
+</ul>
+<h2 id="output-paths">Output Paths</h2>
+<p>Default pattern: <code>{{dir}}/gen/{{file}}.gen.{{name}}.dart</code></p>
+<p>Supports placeholders: <code>{{dir}}</code>, <code>{{file}}</code>, <code>{{name}}</code></p>
+</section>
+
+
+    <section class="summary offset-anchor" id="classes">
+      <h2>Classes</h2>
+      <dl>
+          <dt id="AssertionInitializer">
+  <span class="name "><a href="../code_builders/AssertionInitializer-class.html">AssertionInitializer</a></span> 
+
+</dt>
+<dd>
+  Represents an assertion initializer in a constructor's initializer list.
+</dd>
+
+          <dt id="BufferWritable">
+  <span class="name "><a href="../code_builders/BufferWritable-class.html">BufferWritable</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+          <dt id="Class">
+  <span class="name "><a href="../code_builders/Class-class.html">Class</a></span> 
+
+</dt>
+<dd>
+  Represents a Dart class declaration with full support for all Dart class features.
+</dd>
+
+          <dt id="CodeBuilder">
+  <span class="name "><a href="../code_builders/CodeBuilder-class.html">CodeBuilder</a></span> 
+
+</dt>
+<dd>
+  A flexible builder for generating Dart source files.
+</dd>
+
+          <dt id="Constructor">
+  <span class="name "><a href="../code_builders/Constructor-class.html">Constructor</a></span> 
+
+</dt>
+<dd>
+  Represents a Dart constructor declaration with all its possible configurations.
+</dd>
+
+          <dt id="ConstructorInitializer">
+  <span class="name "><a href="../code_builders/ConstructorInitializer-class.html">ConstructorInitializer</a></span> 
+
+</dt>
+<dd>
+  Abstract base class for all constructor initializer types.
+</dd>
+
+          <dt id="ConstructorParameter">
+  <span class="name "><a href="../code_builders/ConstructorParameter-class.html">ConstructorParameter</a></span> 
+
+</dt>
+<dd>
+  Represents a single parameter in a constructor's parameter list.
+</dd>
+
+          <dt id="DartObjectConverter">
+  <span class="name "><a href="../code_builders/DartObjectConverter-class.html">DartObjectConverter</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> 
+
+</dt>
+<dd>
+  A generic converter for transforming <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_constant_value/DartObject-class.html">DartObject</a> instances into specific Dart types.
+</dd>
+
+          <dt id="Directive">
+  <span class="name "><a href="../code_builders/Directive-class.html">Directive</a></span> 
+
+</dt>
+<dd>
+  Base class for all Dart directive statements (import, export, part, part of).
+</dd>
+
+          <dt id="Enum">
+  <span class="name "><a href="../code_builders/Enum-class.html">Enum</a></span> 
+
+</dt>
+<dd>
+  Represents a Dart enum declaration with full support for all Dart enum features.
+</dd>
+
+          <dt id="EnumConstant">
+  <span class="name "><a href="../code_builders/EnumConstant-class.html">EnumConstant</a></span> 
+
+</dt>
+<dd>
+  Represents a single enum constant declaration.
+</dd>
+
+          <dt id="Export">
+  <span class="name "><a href="../code_builders/Export-class.html">Export</a></span> 
+
+</dt>
+<dd>
+  Represents a Dart <code>export</code> directive for re-exporting symbols from other libraries.
+</dd>
+
+          <dt id="ExportCollection">
+  <span class="name "><a href="../code_builders/ExportCollection-class.html">ExportCollection</a></span> 
+
+</dt>
+<dd>
+  A collection of export directives for batch creation.
+</dd>
+
+          <dt id="Extension">
+  <span class="name "><a href="../code_builders/Extension-class.html">Extension</a></span> 
+
+</dt>
+<dd>
+  Represents a Dart extension declaration with full support for all extension features.
+</dd>
+
+          <dt id="FunctionParameter">
+  <span class="name "><a href="../code_builders/FunctionParameter-class.html">FunctionParameter</a></span> 
+
+</dt>
+<dd>
+  Represents a parameter in a Dart function.
+</dd>
+
+          <dt id="Getter">
+  <span class="name "><a href="../code_builders/Getter-class.html">Getter</a></span> 
+
+</dt>
+<dd>
+  Represents a Dart getter method declaration.
+</dd>
+
+          <dt id="GlobalFunction">
+  <span class="name "><a href="../code_builders/GlobalFunction-class.html">GlobalFunction</a></span> 
+
+</dt>
+<dd>
+  Represents a global (top-level) function declaration in Dart.
+</dd>
+
+          <dt id="GlobalVariable">
+  <span class="name "><a href="../code_builders/GlobalVariable-class.html">GlobalVariable</a></span> 
+
+</dt>
+<dd>
+  Represents a global (top-level) variable declaration in Dart.
+</dd>
+
+          <dt id="Import">
+  <span class="name "><a href="../code_builders/Import-class.html">Import</a></span> 
+
+</dt>
+<dd>
+  Represents a Dart <code>import</code> directive for including external libraries and files.
+</dd>
+
+          <dt id="ImportCollection">
+  <span class="name "><a href="../code_builders/ImportCollection-class.html">ImportCollection</a></span> 
+
+</dt>
+<dd>
+  A collection of import directives for batch creation.
+</dd>
+
+          <dt id="Method">
+  <span class="name "><a href="../code_builders/Method-class.html">Method</a></span> 
+
+</dt>
+<dd>
+  Represents a Dart method declaration with full support for all method features.
+</dd>
+
+          <dt id="MethodParameter">
+  <span class="name "><a href="../code_builders/MethodParameter-class.html">MethodParameter</a></span> 
+
+</dt>
+<dd>
+  Represents a single parameter in a Dart method's parameter list.
+</dd>
+
+          <dt id="Mixin">
+  <span class="name "><a href="../code_builders/Mixin-class.html">Mixin</a></span> 
+
+</dt>
+<dd>
+  Represents a Dart mixin declaration with full support for all mixin features.
+</dd>
+
+          <dt id="Part">
+  <span class="name "><a href="../code_builders/Part-class.html">Part</a></span> 
+
+</dt>
+<dd>
+  Represents a Dart <code>part</code> directive for splitting a library across multiple files.
+</dd>
+
+          <dt id="PartCollection">
+  <span class="name "><a href="../code_builders/PartCollection-class.html">PartCollection</a></span> 
+
+</dt>
+<dd>
+  A collection of part directives for batch creation.
+</dd>
+
+          <dt id="PartOf">
+  <span class="name "><a href="../code_builders/PartOf-class.html">PartOf</a></span> 
+
+</dt>
+<dd>
+  Represents a Dart <code>part of</code> directive that declares a file as part of a library.
+</dd>
+
+          <dt id="Property">
+  <span class="name "><a href="../code_builders/Property-class.html">Property</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+          <dt id="PropertyInitializer">
+  <span class="name "><a href="../code_builders/PropertyInitializer-class.html">PropertyInitializer</a></span> 
+
+</dt>
+<dd>
+  Represents a property/field initializer in a constructor's initializer list.
+</dd>
+
+          <dt id="PublicBufferWritable">
+  <span class="name "><a href="../code_builders/PublicBufferWritable-class.html">PublicBufferWritable</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+          <dt id="RedirectInitializer">
+  <span class="name "><a href="../code_builders/RedirectInitializer-class.html">RedirectInitializer</a></span> 
+
+</dt>
+<dd>
+  Represents a redirecting constructor initializer.
+</dd>
+
+          <dt id="Setter">
+  <span class="name "><a href="../code_builders/Setter-class.html">Setter</a></span> 
+
+</dt>
+<dd>
+  Represents a Dart setter method declaration.
+</dd>
+
+          <dt id="SetterParameter">
+  <span class="name "><a href="../code_builders/SetterParameter-class.html">SetterParameter</a></span> 
+
+</dt>
+<dd>
+  Represents a parameter for a Dart setter.
+</dd>
+
+          <dt id="SuperInitializer">
+  <span class="name "><a href="../code_builders/SuperInitializer-class.html">SuperInitializer</a></span> 
+
+</dt>
+<dd>
+  Represents a super constructor invocation in a constructor's initializer list.
+</dd>
+
+          <dt id="SuperInitializerArgument">
+  <span class="name "><a href="../code_builders/SuperInitializerArgument-class.html">SuperInitializerArgument</a></span> 
+
+</dt>
+<dd>
+  Represents a single argument in a <a href="../code_builders/SuperInitializer-class.html">SuperInitializer</a> invocation.
+</dd>
+
+          <dt id="TypeParameter">
+  <span class="name "><a href="../code_builders/TypeParameter-class.html">TypeParameter</a></span> 
+
+</dt>
+<dd>
+  Represents a generic type parameter with optional upper bound constraint.
+</dd>
+
+          <dt id="UriDirective">
+  <span class="name "><a href="../code_builders/UriDirective-class.html">UriDirective</a></span> 
+
+</dt>
+<dd>
+  Base class for URI-based directives (import, export, part).
+</dd>
+
+          <dt id="UriReference">
+  <span class="name "><a href="../code_builders/UriReference-class.html">UriReference</a></span> 
+
+</dt>
+<dd>
+  Represents a URI reference used in Dart directive statements.
+</dd>
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="enums">
+      <h2>Enums</h2>
+      <dl>
+          <dt id="ClassModifier">
+  <span class="name "><a href="../code_builders/ClassModifier.html">ClassModifier</a></span> 
+
+</dt>
+<dd>
+  Enum representing the primary class modifiers introduced in Dart 3.0.
+</dd>
+
+      </dl>
+    </section>
+
+
+
+    <section class="summary offset-anchor" id="extensions">
+      <h2>Extensions</h2>
+      <dl>
+          <dt id="BufferWritableIterableExtension">
+  <span class="name "><a href="../code_builders/BufferWritableIterableExtension.html">BufferWritableIterableExtension</a></span>
+  on <a href="https://api.dart.dev/stable/3.7.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../code_builders/BufferWritable-class.html">BufferWritable</a></span>&gt;</span>
+  
+
+</dt>
+<dd>
+  
+</dd>
+
+          <dt id="DartObjectExtension">
+  <span class="name "><a href="../code_builders/DartObjectExtension.html">DartObjectExtension</a></span>
+  on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_constant_value/DartObject-class.html">DartObject</a>
+  
+
+</dt>
+<dd>
+  Extension on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_constant_value/DartObject-class.html">DartObject</a> providing enhanced functionality for field access and value extraction.
+</dd>
+
+          <dt id="DartTypeExtension">
+  <span class="name "><a href="../code_builders/DartTypeExtension.html">DartTypeExtension</a></span>
+  on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_type/DartType-class.html">DartType</a>
+  
+
+</dt>
+<dd>
+  Extension on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_type/DartType-class.html">DartType</a> providing type comparison and checking methods.
+</dd>
+
+          <dt id="ElementExtension">
+  <span class="name "><a href="../code_builders/ElementExtension.html">ElementExtension</a></span>
+  on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/Element-class.html">Element</a>
+  
+
+</dt>
+<dd>
+  Extension on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/Element-class.html">Element</a> providing annotation-related functionality.
+</dd>
+
+          <dt id="FunctionTypedElementExtension">
+  <span class="name "><a href="../code_builders/FunctionTypedElementExtension.html">FunctionTypedElementExtension</a></span>
+  on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/FunctionTypedElement-class.html">FunctionTypedElement</a>
+  
+
+</dt>
+<dd>
+  Extension on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/FunctionTypedElement-class.html">FunctionTypedElement</a> providing parameter filtering methods.
+</dd>
+
+          <dt id="InterfaceElementExtension">
+  <span class="name "><a href="../code_builders/InterfaceElementExtension.html">InterfaceElementExtension</a></span>
+  on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/InterfaceElement-class.html">InterfaceElement</a>
+  
+
+</dt>
+<dd>
+  Extension on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/InterfaceElement-class.html">InterfaceElement</a> providing member filtering methods.
+</dd>
+
+          <dt id="InterfaceTypeExtensions">
+  <span class="name "><a href="../code_builders/InterfaceTypeExtensions.html">InterfaceTypeExtensions</a></span>
+  on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_type/InterfaceType-class.html">InterfaceType</a>
+  
+
+</dt>
+<dd>
+  Extension on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_type/InterfaceType-class.html">InterfaceType</a> providing inheritance checking and member introspection methods.
+</dd>
+
+          <dt id="LibraryElementExtension">
+  <span class="name "><a href="../code_builders/LibraryElementExtension.html">LibraryElementExtension</a></span>
+  on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/LibraryElement-class.html">LibraryElement</a>
+  
+
+</dt>
+<dd>
+  Extension on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/LibraryElement-class.html">LibraryElement</a> providing element collection and filtering methods.
+</dd>
+
+          <dt id="PublicBufferWritableIterableExtension">
+  <span class="name "><a href="../code_builders/PublicBufferWritableIterableExtension.html">PublicBufferWritableIterableExtension</a></span>
+  on <a href="https://api.dart.dev/stable/3.7.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../code_builders/PublicBufferWritable-class.html">PublicBufferWritable</a></span>&gt;</span>
+  
+
+</dt>
+<dd>
+  
+</dd>
+
+      </dl>
+    </section>
+
+
+    <section class="summary offset-anchor" id="properties">
+      <h2>Properties</h2>
+      <dl class="properties">
+          <dt id="durationDartObjectConverter" class="property">
+  <span class="name"><a href="../code_builders/durationDartObjectConverter.html">durationDartObjectConverter</a></span>
+  <span class="signature">&#8596; <a href="../code_builders/DartObjectConverter-class.html">DartObjectConverter</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Duration-class.html">Duration</a></span>&gt;</span></span>
+  
+
+</dt>
+<dd>
+  Pre-configured converter for <a href="https://api.dart.dev/stable/3.7.2/dart-core/Duration-class.html">Duration</a> objects.
+  <div class="features"><span class="feature">getter/setter pair</span></div>
+
+</dd>
+
+      </dl>
+    </section>
+
+
+    <section class="summary offset-anchor" id="typedefs">
+      <h2>Typedefs</h2>
+      <dl>
+          
+  <dt id="BuildFunction" class="callable">
+    <span class="name"><a href="../code_builders/BuildFunction.html">BuildFunction</a></span><span class="signature">
+      <span class="returntype parameter">= <a href="https://api.dart.dev/stable/3.7.2/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/StringBuffer-class.html">StringBuffer</a>?</span>&gt;</span> Function<span class="signature">(<span class="parameter" id="param-buildStep"><span class="type-annotation"><a href="https://pub.dev/documentation/build/4.0.2/build/BuildStep-class.html">BuildStep</a></span> <span class="parameter-name">buildStep</span></span>)</span></span>
+    </span>
+    
+
+  </dt>
+  <dd>
+    The main build function that generates code content for a single input file.
+    
+
+  </dd>
+
+      </dl>
+    </section>
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">code_builders</a></li>
+    <li class="self-crumb">code_builder.dart</li>
+</ol>
+
+    <h5><span class="package-name">code_builders</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="../code_builders">code_builder</a></li>
+</ol>
+
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+    <h5>code_builders library</h5>
+  </div><!--/sidebar-offcanvas-right-->
+</main>
+<footer>
+  <span class="no-break">
+    code_builders
+      0.1.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

@@ -8,7 +8,7 @@ part of code_builders;
 ///
 /// The directive is written to a buffer in the format: `{type} {str};`
 /// For example: `import 'package:foo/bar.dart';`
-abstract class Directive extends BufferWritable {
+abstract class Directive extends PublicBufferWritable {
   /// The directive keyword (e.g., 'import', 'export', 'part', 'part of').
   final String? _type;
 
@@ -34,14 +34,12 @@ abstract class Directive extends BufferWritable {
 /// external files or libraries via URIs. It uses [UriReference] to properly
 /// format absolute, relative, and package URIs.
 abstract class UriDirective extends Directive {
-  /// The URI reference that will be formatted and quoted in the directive.
-  UriReference? _uriReference;
 
   /// Creates a URI-based directive with the given [type] and [_uriReference].
   ///
   /// The URI reference is automatically wrapped in single quotes when passed
   /// to the parent [Directive] constructor.
-  UriDirective(String? type, this._uriReference) : super(type, '\'$_uriReference\'');
+  UriDirective(String? type, UriReference? _uriReference) : super(type, '\'$_uriReference\'');
 }
 
 /// Internal collection class for managing lists of URI-based directives.

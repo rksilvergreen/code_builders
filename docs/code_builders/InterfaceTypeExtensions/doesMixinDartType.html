@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the doesMixinDartType method from the InterfaceTypeExtensions extension, for the Dart programming language.">
+  <title>doesMixinDartType method - InterfaceTypeExtensions extension - code_builders library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">code_builders</a></li>
+    <li><a href="../../code_builders">code_builder.dart</a></li>
+    <li><a href="../../code_builders/InterfaceTypeExtensions.html">InterfaceTypeExtensions</a></li>
+    <li class="self-crumb">doesMixinDartType method</li>
+  </ol>
+  <div class="self-name">doesMixinDartType</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="code_builders&#47;InterfaceTypeExtensions-extension-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">doesMixinDartType</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span>
+<span class="name ">doesMixinDartType</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="doesMixinDartType-param-dartType"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_type/DartType-class.html">DartType</a></span> <span class="parameter-name">dartType</span>, {</span></li>
+<li><span class="parameter" id="doesMixinDartType-param-withTypeParams"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">withTypeParams</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="doesMixinDartType-param-extended"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">extended</span> = <span class="default-value">true</span>, </span></li>
+</ol>})
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Checks if this type uses the specified mixin <code>dartType</code>.</p>
+<p>This method checks whether this type uses the specified mixin <code>dartType</code>.
+It can optionally include or exclude inherited mixins in the check.</p>
+<p><code>dartType</code>: The <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_type/DartType-class.html">DartType</a> to check for mixin usage.
+<code>withTypeParams</code>: If <code>true</code>, includes type parameters in type matching.
+                 If <code>false</code>, ignores type parameters (default).
+<code>extended</code>: If <code>true</code>, includes inherited mixins in the check.
+           If <code>false</code>, only checks directly used mixins (default: <code>true</code>).</p>
+<h2 id="returns">Returns</h2>
+<p><code>true</code> if this type uses mixin <code>dartType</code>, <code>false</code> otherwise.</p>
+<h2 id="example">Example</h2>
+<pre class="language-dart"><code class="language-dart">final otherType = element.thisType;
+if (interfaceType.doesMixinDartType(otherType)) {
+  // Type uses otherType as mixin
+}
+</code></pre>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">bool doesMixinDartType(DartType dartType, {bool withTypeParams = false, bool extended = true}) =&gt;
+    (extended ? extendedMixins : mixins)
+        .any((interfaceType) =&gt; interfaceType.isDartType(dartType, withTypeParams: withTypeParams));</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">code_builders</a></li>
+    <li><a href="../../code_builders">code_builders</a></li>
+    <li><a href="../../code_builders/InterfaceTypeExtensions.html">InterfaceTypeExtensions</a></li>
+    <li class="self-crumb">doesMixinDartType method</li>
+</ol>
+
+    <h5>InterfaceTypeExtensions extension on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_type/InterfaceType-class.html">InterfaceType</a></h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    code_builders
+      0.1.0
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

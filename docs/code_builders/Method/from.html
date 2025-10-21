@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the from method from the Method class, for the Dart programming language.">
+  <title>from method - Method class - code_builders library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">code_builders</a></li>
+    <li><a href="../../code_builders">code_builder.dart</a></li>
+    <li><a href="../../code_builders/Method-class.html">Method</a></li>
+    <li class="self-crumb">from static method</li>
+  </ol>
+  <div class="self-name">from</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="code_builders&#47;Method-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">from</span> static method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../code_builders/Method-class.html">Method</a></span>&gt;</span></span>
+<span class="name ">from</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="from-param-methodElement"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/MethodElement-class.html">MethodElement</a></span> <span class="parameter-name">methodElement</span>, </span></li>
+<li><span class="parameter" id="from-param-buildStep"><span class="type-annotation"><a href="https://pub.dev/documentation/build/4.0.2/build/BuildStep-class.html">BuildStep</a></span> <span class="parameter-name">buildStep</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Creates a <a href="../../code_builders/Method-class.html">Method</a> instance from an analyzer <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/MethodElement-class.html">MethodElement</a>.</p>
+<p>This factory method extracts all method information from the analyzer's
+representation of a Dart method, including its AST node, and builds a
+corresponding <a href="../../code_builders/Method-class.html">Method</a> instance.</p>
+<p><strong>Extraction Process:</strong></p>
+<ul>
+<li><strong>Annotations:</strong> Collects all metadata annotations, specially handling <code>@override</code></li>
+<li><strong>Documentation:</strong> Extracts documentation comments from the AST node</li>
+<li><strong>Modifiers:</strong> Detects <code>external</code>, <code>static</code>, <code>async</code>, <code>generator</code>, and arrow syntax</li>
+<li><strong>Parameters:</strong> Asynchronously converts all parameters to <a href="../../code_builders/MethodParameter-class.html">MethodParameter</a> instances</li>
+<li><strong>Generic Types:</strong> Extracts type parameters with their bounds</li>
+<li><strong>Body:</strong> Extracts the method body (or null for external/empty methods)</li>
+</ul>
+<p><strong>Note on @override:</strong></p>
+<p>The <code>@override</code> annotation is extracted into the <a href="../../code_builders/Method/annotations.html">annotations</a> list, and the
+<a href="../../code_builders/Method/override.html">override</a> property is set to <code>false</code> to avoid duplication in the output.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>methodElement</code>: The analyzer's representation of the method</li>
+<li><code>buildStep</code>: The build step providing access to resolution and AST nodes</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>A <a href="https://api.dart.dev/stable/3.7.2/dart-core/Future-class.html">Future</a> that completes with a <a href="../../code_builders/Method-class.html">Method</a> instance representing the complete
+method declaration.</p>
+<p><strong>Example Usage:</strong></p>
+<pre class="language-dart"><code class="language-dart">// In a code generator
+final element = classElement.methods.first;
+final method = await Method.from(element, buildStep);
+// Use method to generate code...
+</code></pre>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static Future&lt;Method&gt; from(
+  MethodElement methodElement,
+  BuildStep buildStep,
+) async {
+  MethodDeclaration astNode = await buildStep.resolver.astNodeFor(methodElement.firstFragment) as MethodDeclaration;
+
+  &#47;&#47; Collect all annotations
+  List&lt;String&gt; annotations = [];
+  for (var annotation in methodElement.metadata.annotations) {
+    if (annotation.isOverride) {
+      annotations.add(&#39;@override&#39;);
+    } else {
+      annotations.add(annotation.toSource());
+    }
+  }
+
+  &#47;&#47; Extract doc comment if present
+  String docComment = &#39;&#39;;
+  if (astNode.documentationComment != null) {
+    docComment = astNode.documentationComment!.tokens.map((token) =&gt; token.toString()).join(&#39;\n&#39;);
+  }
+
+  return Method(
+      annotations: annotations,
+      docComment: docComment,
+      external: methodElement.isExternal,
+      override: false, &#47;&#47; Already captured in annotations
+      static: methodElement.isStatic,
+      returnType: &#39;${methodElement.returnType}&#39;,
+      name: methodElement.name!,
+      parameters: [for (final p in methodElement.formalParameters) await MethodParameter.from(p, buildStep)],
+      genericTypes: methodElement.typeParameters.map((p) =&gt; &#39;$p&#39;).toList(),
+      multiLineParameters: true,
+      async: methodElement.firstFragment.isAsynchronous,
+      generator: methodElement.firstFragment.isGenerator,
+      arrowFunction: astNode.body is ExpressionFunctionBody,
+      body: (astNode.body is EmptyFunctionBody)
+          ? null
+          : (StringBuffer b) {
+              FunctionBody body = astNode.body;
+              if (body is BlockFunctionBody)
+                b.write(body.block.statements.join(&#39; &#39;));
+              else if (body is ExpressionFunctionBody) b.write(&#39;${body.expression}&#39;);
+            });
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">code_builders</a></li>
+    <li><a href="../../code_builders">code_builders</a></li>
+    <li><a href="../../code_builders/Method-class.html">Method</a></li>
+    <li class="self-crumb">from static method</li>
+</ol>
+
+    <h5>Method class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    code_builders
+      0.1.0
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

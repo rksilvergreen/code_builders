@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the Method class from the code_builders library, for the Dart programming language.">
+  <title>Method class - code_builders library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">code_builders</a></li>
+    <li><a href="../code_builders">code_builder.dart</a></li>
+    <li class="self-crumb">Method class</li>
+  </ol>
+  <div class="self-name">Method</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="code_builders&#47;code_builders-library-sidebar.html"
+    data-below-sidebar="code_builders&#47;Method-class-sidebar.html">
+    <div>
+<h1><span class="kind-class">Method</span> class 
+ 
+</h1></div>
+
+    
+<section class="desc markdown">
+  <p>Represents a Dart method declaration with full support for all method features.</p>
+<p>This class models any valid Dart method including:</p>
+<ul>
+<li>Instance and static methods</li>
+<li>Methods with generic type parameters</li>
+<li>Async methods (async, async*, sync*)</li>
+<li>External methods (implemented outside Dart)</li>
+<li>Arrow function syntax vs block body syntax</li>
+<li>All parameter types (positional, optional, named, required named)</li>
+<li>Documentation comments and metadata annotations</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<p>Simple method:</p>
+<pre class="language-dart"><code class="language-dart">Method(
+  name: 'greet',
+  returnType: 'String',
+  body: (b) =&gt; b.write('return "Hello";'),
+)
+// Generates: String greet() { return "Hello"; }
+</code></pre>
+<p>Async method with parameters:</p>
+<pre class="language-dart"><code class="language-dart">Method(
+  returnType: 'Future&lt;User&gt;',
+  name: 'fetchUser',
+  async: true,
+  parameters: [
+    MethodParameter(type: 'String', name: 'id'),
+  ],
+  body: (b) =&gt; b.write('return await userRepo.getById(id);'),
+)
+// Generates: Future&lt;User&gt; fetchUser(String id) async { return await userRepo.getById(id); }
+</code></pre>
+<p>Generic method with arrow syntax:</p>
+<pre class="language-dart"><code class="language-dart">Method(
+  returnType: 'T',
+  name: 'identity',
+  genericTypes: ['T'],
+  parameters: [MethodParameter(type: 'T', name: 'value')],
+  arrowFunction: true,
+  body: (b) =&gt; b.write('value'),
+)
+// Generates: T identity&lt;T&gt;(T value) =&gt; value;
+</code></pre>
+<p>External method:</p>
+<pre class="language-dart"><code class="language-dart">Method(
+  external: true,
+  returnType: 'void',
+  name: 'nativeMethod',
+)
+// Generates: external void nativeMethod();
+</code></pre>
+</section>
+
+
+    <section>
+      <dl class="dl-horizontal">
+        
+
+        
+  <dt>Implemented types</dt>
+  <dd>
+    <ul class="comma-separated clazz-relationships">
+        <li><a href="../code_builders/BufferWritable-class.html">BufferWritable</a></li>
+    </ul>
+  </dd>
+        
+
+
+        
+        
+
+
+      </dl>
+    </section>
+
+    
+  <section class="summary offset-anchor" id="constructors">
+    <h2>Constructors</h2>
+    <dl class="constructor-summary-list">
+        <dt id="Method" class="callable">
+          <span class="name"><a href="../code_builders/Method/Method.html">Method</a></span><span class="signature">({<span class="parameter" id="-param-annotations"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">annotations</span> = <span class="default-value">const []</span>, </span><span class="parameter" id="-param-docComment"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">docComment</span> = <span class="default-value">&#39;&#39;</span>, </span><span class="parameter" id="-param-external"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">external</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-override"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">override</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-static"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">static</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-returnType"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">returnType</span>, </span><span class="parameter" id="-param-name"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="-param-parameters"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../code_builders/MethodParameter-class.html">MethodParameter</a></span>&gt;</span>?</span> <span class="parameter-name">parameters</span>, </span><span class="parameter" id="-param-genericTypes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">genericTypes</span>, </span><span class="parameter" id="-param-multiLineParameters"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">multiLineParameters</span> = <span class="default-value">true</span>, </span><span class="parameter" id="-param-async"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">async</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-generator"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">generator</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-arrowFunction"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">arrowFunction</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-body"><span class="type-annotation">void</span> <span class="parameter-name">body</span>(<span class="parameter" id="param-"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/StringBuffer-class.html">StringBuffer</a></span></span>)?</span>})</span>
+        </dt>
+        <dd>
+          Creates a new <a href="../code_builders/Method-class.html">Method</a> with the specified properties.
+        </dd>
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-properties">
+    <h2>Properties</h2>
+    <dl class="properties">
+        <dt id="annotations" class="property">
+  <span class="name"><a href="../code_builders/Method/annotations.html">annotations</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  
+
+</dt>
+<dd>
+  A list of metadata annotations to be applied to this method.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="arrowFunction" class="property">
+  <span class="name"><a href="../code_builders/Method/arrowFunction.html">arrowFunction</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span>
+  
+
+</dt>
+<dd>
+  Whether this method uses arrow function syntax (=&gt;) instead of a block body.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="async" class="property">
+  <span class="name"><a href="../code_builders/Method/async.html">async</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span>
+  
+
+</dt>
+<dd>
+  Whether this method is asynchronous (returns a Future).
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="body" class="property">
+  <span class="name"><a href="../code_builders/Method/body.html">body</a></span>
+  <span class="signature">&#8594; void Function<span class="signature">(<span class="parameter" id="param-"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/StringBuffer-class.html">StringBuffer</a></span></span>)</span>?</span>
+  
+
+</dt>
+<dd>
+  The implementation body of this method.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="docComment" class="property">
+  <span class="name"><a href="../code_builders/Method/docComment.html">docComment</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  The documentation comment for this method.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="external" class="property">
+  <span class="name"><a href="../code_builders/Method/external.html">external</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span>
+  
+
+</dt>
+<dd>
+  Whether this method is declared as external.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="generator" class="property">
+  <span class="name"><a href="../code_builders/Method/generator.html">generator</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span>
+  
+
+</dt>
+<dd>
+  Whether this method is a generator (uses sync* or async*).
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="genericTypes" class="property">
+  <span class="name"><a href="../code_builders/Method/genericTypes.html">genericTypes</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span>&gt;</span>?</span>
+  
+
+</dt>
+<dd>
+  The generic type parameters for this method, if any.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="hashCode" class="property inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Object/hashCode.html">hashCode</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  The hash code for this object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="multiLineParameters" class="property">
+  <span class="name"><a href="../code_builders/Method/multiLineParameters.html">multiLineParameters</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span>
+  
+
+</dt>
+<dd>
+  Whether to format parameters with a trailing comma for multi-line style.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="name" class="property">
+  <span class="name"><a href="../code_builders/Method/name.html">name</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  The name of this method.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="namedParameters" class="property">
+  <span class="name"><a href="../code_builders/Method/namedParameters.html">namedParameters</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../code_builders/MethodParameter-class.html">MethodParameter</a></span>&gt;</span></span>
+  
+
+</dt>
+<dd>
+  The list of named parameters.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="optionalParameters" class="property">
+  <span class="name"><a href="../code_builders/Method/optionalParameters.html">optionalParameters</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../code_builders/MethodParameter-class.html">MethodParameter</a></span>&gt;</span></span>
+  
+
+</dt>
+<dd>
+  The list of optional positional parameters.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="override" class="property">
+  <span class="name"><a href="../code_builders/Method/override.html">override</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span>
+  
+
+</dt>
+<dd>
+  Whether this method overrides a superclass or interface method.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="returnType" class="property">
+  <span class="name"><a href="../code_builders/Method/returnType.html">returnType</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a>?</span>
+  
+
+</dt>
+<dd>
+  The return type of this method.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="runtimeType" class="property inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Object/runtimeType.html">runtimeType</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/Type-class.html">Type</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  A representation of the runtime type of the object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="static" class="property">
+  <span class="name"><a href="../code_builders/Method/static.html">static</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span>
+  
+
+</dt>
+<dd>
+  Whether this method is static (class-level rather than instance-level).
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="unnamedParameters" class="property">
+  <span class="name"><a href="../code_builders/Method/unnamedParameters.html">unnamedParameters</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../code_builders/MethodParameter-class.html">MethodParameter</a></span>&gt;</span></span>
+  
+
+</dt>
+<dd>
+  The list of required positional parameters.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-methods">
+    <h2>Methods</h2>
+    <dl class="callables">
+        <dt id="copyWith" class="callable">
+  <span class="name"><a href="../code_builders/Method/copyWith.html">copyWith</a></span><span class="signature">(<wbr>{<span class="parameter" id="copyWith-param-annotations"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">annotations</span>, </span><span class="parameter" id="copyWith-param-docComment"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">docComment</span>, </span><span class="parameter" id="copyWith-param-external"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">external</span>, </span><span class="parameter" id="copyWith-param-override"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">override</span>, </span><span class="parameter" id="copyWith-param-static"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">static</span>, </span><span class="parameter" id="copyWith-param-returnType"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">returnType</span>, </span><span class="parameter" id="copyWith-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="copyWith-param-parameters"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../code_builders/MethodParameter-class.html">MethodParameter</a></span>&gt;</span>?</span> <span class="parameter-name">parameters</span>, </span><span class="parameter" id="copyWith-param-genericTypes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">genericTypes</span>, </span><span class="parameter" id="copyWith-param-multiLineParameters"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">multiLineParameters</span>, </span><span class="parameter" id="copyWith-param-async"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">async</span>, </span><span class="parameter" id="copyWith-param-generator"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">generator</span>, </span><span class="parameter" id="copyWith-param-arrowFunction"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">arrowFunction</span>, </span><span class="parameter" id="copyWith-param-body"><span class="type-annotation">void</span> <span class="parameter-name">body</span>(<span class="parameter" id="param-"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/StringBuffer-class.html">StringBuffer</a></span></span>)?</span>})
+    <span class="returntype parameter">&#8594; <a href="../code_builders/Method-class.html">Method</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Creates a copy of this <a href="../code_builders/Method-class.html">Method</a> with the specified properties replaced.
+  
+
+</dd>
+
+        <dt id="noSuchMethod" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Invoked when a nonexistent method or property is accessed.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="toString" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  A string representation of this object.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor inherited"
+      id="operators">
+    <h2>Operators</h2>
+    <dl class="callables">
+        <dt id="operator ==" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  The equality operator.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+    
+    
+  <section class="summary offset-anchor" id="static-methods">
+    <h2>Static Methods</h2>
+    <dl class="callables">
+        <dt id="from" class="callable">
+  <span class="name"><a href="../code_builders/Method/from.html">from</a></span><span class="signature">(<wbr><span class="parameter" id="from-param-methodElement"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/MethodElement-class.html">MethodElement</a></span> <span class="parameter-name">methodElement</span>, </span><span class="parameter" id="from-param-buildStep"><span class="type-annotation"><a href="https://pub.dev/documentation/build/4.0.2/build/BuildStep-class.html">BuildStep</a></span> <span class="parameter-name">buildStep</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../code_builders/Method-class.html">Method</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Creates a <a href="../code_builders/Method-class.html">Method</a> instance from an analyzer <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/MethodElement-class.html">MethodElement</a>.
+  
+
+</dd>
+
+    </dl>
+  </section>
+    
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">code_builders</a></li>
+    <li><a href="../code_builders">code_builders</a></li>
+    <li class="self-crumb">Method class</li>
+</ol>
+
+    <h5>code_builders library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    code_builders
+      0.1.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

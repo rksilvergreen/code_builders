@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the from method from the MethodParameter class, for the Dart programming language.">
+  <title>from method - MethodParameter class - code_builders library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">code_builders</a></li>
+    <li><a href="../../code_builders">code_builder.dart</a></li>
+    <li><a href="../../code_builders/MethodParameter-class.html">MethodParameter</a></li>
+    <li class="self-crumb">from static method</li>
+  </ol>
+  <div class="self-name">from</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="code_builders&#47;MethodParameter-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">from</span> static method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../code_builders/MethodParameter-class.html">MethodParameter</a></span>&gt;</span></span>
+<span class="name ">from</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="from-param-parameterElement"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/FormalParameterElement-class.html">FormalParameterElement</a></span> <span class="parameter-name">parameterElement</span>, </span></li>
+<li><span class="parameter" id="from-param-buildStep"><span class="type-annotation"><a href="https://pub.dev/documentation/build/4.0.2/build/BuildStep-class.html">BuildStep</a></span> <span class="parameter-name">buildStep</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Creates a <a href="../../code_builders/MethodParameter-class.html">MethodParameter</a> instance from an analyzer <code>ParameterElement</code>.</p>
+<p>This factory method extracts all parameter information from the analyzer's
+representation of a Dart parameter, including its AST node, and builds a
+corresponding <a href="../../code_builders/MethodParameter-class.html">MethodParameter</a> instance.</p>
+<p><strong>Extraction Process:</strong></p>
+<ul>
+<li><strong>Annotations:</strong> Collects all metadata annotations</li>
+<li><strong>Modifiers:</strong> Detects <code>covariant</code> modifier</li>
+<li><strong>Parameter Type:</strong> Determines if named, required, or optional</li>
+<li><strong>Type:</strong> Extracts the parameter type as a string</li>
+<li><strong>Default Value:</strong> Extracts default value from AST node if present</li>
+</ul>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>parameterElement</code>: The analyzer's representation of the parameter</li>
+<li><code>buildStep</code>: The build step providing access to resolution and AST nodes</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>A <a href="https://api.dart.dev/stable/3.7.2/dart-core/Future-class.html">Future</a> that completes with a <a href="../../code_builders/MethodParameter-class.html">MethodParameter</a> instance representing
+the parameter.</p>
+<p><strong>Example Usage:</strong></p>
+<pre class="language-dart"><code class="language-dart">// In a code generator
+final paramElement = methodElement.parameters.first;
+final param = await MethodParameter.from(paramElement, buildStep);
+</code></pre>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static Future&lt;MethodParameter&gt; from(
+  FormalParameterElement parameterElement,
+  BuildStep buildStep,
+) async {
+  FormalParameter astNode = await buildStep.resolver.astNodeFor(parameterElement.firstFragment) as FormalParameter;
+
+  &#47;&#47; Collect all annotations
+  List&lt;String&gt; annotations = [];
+  for (var annotation in parameterElement.metadata.annotations) {
+    annotations.add(annotation.toSource());
+  }
+
+  return MethodParameter(
+    annotations: annotations,
+    covariant: parameterElement.isCovariant,
+    name: parameterElement.name!,
+    named: parameterElement.isNamed,
+    Required: parameterElement.isRequiredNamed,
+    optional: parameterElement.isOptionalPositional,
+    type: &#39;${parameterElement.type}&#39;,
+    defaultValue: (astNode is DefaultFormalParameter) ? &#39;${astNode.defaultValue}&#39; : null,
+  );
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">code_builders</a></li>
+    <li><a href="../../code_builders">code_builders</a></li>
+    <li><a href="../../code_builders/MethodParameter-class.html">MethodParameter</a></li>
+    <li class="self-crumb">from static method</li>
+</ol>
+
+    <h5>MethodParameter class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    code_builders
+      0.1.0
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

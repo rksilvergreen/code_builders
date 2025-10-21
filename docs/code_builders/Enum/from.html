@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the from method from the Enum class, for the Dart programming language.">
+  <title>from method - Enum class - code_builders library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">code_builders</a></li>
+    <li><a href="../../code_builders">code_builder.dart</a></li>
+    <li><a href="../../code_builders/Enum-class.html">Enum</a></li>
+    <li class="self-crumb">from static method</li>
+  </ol>
+  <div class="self-name">from</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="code_builders&#47;Enum-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">from</span> static method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../code_builders/Enum-class.html">Enum</a></span>&gt;</span></span>
+<span class="name ">from</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="from-param-enumElement"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/EnumElement-class.html">EnumElement</a></span> <span class="parameter-name">enumElement</span>, </span></li>
+<li><span class="parameter" id="from-param-buildStep"><span class="type-annotation"><a href="https://pub.dev/documentation/build/4.0.2/build/BuildStep-class.html">BuildStep</a></span> <span class="parameter-name">buildStep</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Creates an <a href="../../code_builders/Enum-class.html">Enum</a> instance from an analyzer <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_element_element/EnumElement-class.html">EnumElement</a>.</p>
+<p>This static factory method extracts all enum information from the analyzer's
+representation of a Dart enum, including constants, mixins, interfaces, and all members.</p>
+<p><strong>Extraction Logic:</strong></p>
+<ul>
+<li><strong>Constants:</strong> Extracts constant names and constructor arguments (if any)</li>
+<li><strong>Mixins:</strong> Extracts all applied mixins</li>
+<li><strong>Interfaces:</strong> Extracts all implemented interfaces</li>
+<li><strong>Members:</strong> Asynchronously converts all fields, accessors, constructors, and methods</li>
+</ul>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>enumElement</code>: The analyzer's representation of the enum</li>
+<li><code>buildStep</code>: The build step providing access to resolution and AST nodes</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>An <a href="../../code_builders/Enum-class.html">Enum</a> instance representing the complete enum declaration.</p>
+<p><strong>Example:</strong></p>
+<pre class="language-dart"><code class="language-dart">// In a Builder
+final libraryElement = await buildStep.inputLibrary;
+for (final element in libraryElement.topLevelElements) {
+  if (element is EnumElement) {
+    final enumDeclaration = await Enum.from(element, buildStep);
+    // Use enumDeclaration...
+  }
+}
+</code></pre>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static Future&lt;Enum&gt; from(
+  EnumElement enumElement,
+  BuildStep buildStep,
+) async {
+  EnumDeclaration astNode = await buildStep.resolver.astNodeFor(enumElement.firstFragment) as EnumDeclaration;
+
+  &#47;&#47; Extract constants with their arguments
+  List&lt;EnumConstant&gt; constants = astNode.constants.map((constantDecl) {
+    String constantName = constantDecl.name.lexeme;
+    List&lt;String&gt;? arguments;
+
+    &#47;&#47; Check if the constant has constructor arguments
+    if (constantDecl.arguments != null) {
+      arguments = constantDecl.arguments!.argumentList.arguments.map((arg) =&gt; arg.toString()).toList();
+    }
+
+    return EnumConstant(
+      name: constantName,
+      arguments: arguments,
+    );
+  }).toList();
+
+  return Enum(
+    docComment: enumElement.documentationComment,
+    annotations: enumElement.metadata.annotations.map((e) =&gt; e.toSource()).toList(),
+    name: enumElement.name!,
+    constants: constants,
+    mixins: enumElement.mixins.map((e) =&gt; e.element.name!).toList(),
+    implementations: enumElement.interfaces.map((e) =&gt; e.element.name!).toList(),
+    properties: [
+      for (final e in enumElement.fields.where((f) =&gt; !f.isEnumConstant)) await Property.from(e, buildStep)
+    ],
+    getters: [for (final e in enumElement.getters) await Getter.from(e, buildStep)],
+    setters: [for (final e in enumElement.setters) await Setter.from(e, buildStep)],
+    constructors: [for (final e in enumElement.constructors) await Constructor.from(e, buildStep)],
+    methods: [for (final e in enumElement.methods) await Method.from(e, buildStep)],
+  );
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">code_builders</a></li>
+    <li><a href="../../code_builders">code_builders</a></li>
+    <li><a href="../../code_builders/Enum-class.html">Enum</a></li>
+    <li class="self-crumb">from static method</li>
+</ol>
+
+    <h5>Enum class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    code_builders
+      0.1.0
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

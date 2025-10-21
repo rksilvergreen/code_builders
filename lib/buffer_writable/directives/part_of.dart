@@ -55,6 +55,27 @@ abstract class PartOf extends Directive {
   /// // Generates: part of my_library;
   /// ```
   factory PartOf.library(String library) => _PartOfLibraryStatement(library);
+
+  /// Creates a URI-based `part of` statement from a [BuildStep].
+  ///
+  /// This factory is designed for code generation scenarios where you need to
+  /// generate a part file that references its parent library. It automatically
+  /// calculates the relative path from the output file to the input file.
+  ///
+  /// The [buildStep] provides the input file (the library being referenced)
+  /// and the output file location (where the generated part file will be written).
+  ///
+  /// Example:
+  /// ```dart
+  /// // In a builder, if inputId.path is 'lib/main.dart'
+  /// // and first output is 'lib/.gen/main.gen.dart'
+  /// PartOf.fromBuildStep(buildStep)
+  /// // Generates: part of '../main.dart';
+  /// ```
+  factory PartOf.fromBuildStep(BuildStep buildStep) {
+    final outputDir = p.dirname(buildStep.allowedOutputs.first.path);
+    return _PartOfUriStatement.relative(buildStep.inputId.path, from: outputDir);
+  }
 }
 
 /// Implementation of URI-based `part of` statements.

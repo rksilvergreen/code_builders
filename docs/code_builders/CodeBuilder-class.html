@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the CodeBuilder class from the code_builders library, for the Dart programming language.">
+  <title>CodeBuilder class - code_builders library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">code_builders</a></li>
+    <li><a href="../code_builders">code_builder.dart</a></li>
+    <li class="self-crumb">CodeBuilder class</li>
+  </ol>
+  <div class="self-name">CodeBuilder</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="code_builders&#47;code_builders-library-sidebar.html"
+    data-below-sidebar="code_builders&#47;CodeBuilder-class-sidebar.html">
+    <div>
+<h1><span class="kind-class">CodeBuilder</span> class 
+ 
+</h1></div>
+
+    
+<section class="desc markdown">
+  <p>A flexible builder for generating Dart source files.</p>
+<p>Extends <a href="https://pub.dev/documentation/build/4.0.2/build/Builder-class.html">Builder</a> to provide code generation with automatic formatting,
+directive management, and package analysis capabilities.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Customizable input matching with glob patterns</li>
+<li>Automatic code formatting with dart_style</li>
+<li>Support for imports, exports, parts, and part-of directives</li>
+<li>Generated file headers and error handling</li>
+</ul>
+<h2 id="file-types">File Types</h2>
+<ul>
+<li><strong>Library files</strong>: Use <code>imports</code>, <code>exports</code>, <code>parts</code> parameters</li>
+<li><strong>Part files</strong>: Use <code>partOf</code> parameter (mutually exclusive with library directives)</li>
+</ul>
+<h2 id="usage-examples">Usage Examples</h2>
+<h3 id="basic-builder">Basic Builder</h3>
+<pre class="language-dart"><code class="language-dart">final builder = CodeBuilder(
+  name: 'my_generator',
+  buildExtensions: {
+    'lib/models/*.dart': ['lib/generated/*.g.dart']
+  },
+  build: (buildStep) async {
+    final buffer = StringBuffer();
+    buffer.writeln('// Generated code');
+    return buffer;
+  },
+);
+</code></pre>
+<h3 id="builder-with-directives">Builder with Directives</h3>
+<pre class="language-dart"><code class="language-dart">final builder = CodeBuilder(
+  name: 'json_serializer',
+  buildExtensions: {
+    'lib/models/*.dart': ['lib/generated/*.json.dart']
+  },
+  imports: (packages) =&gt; [
+    Import.fromPackage('dart:convert'),
+  ],
+  build: (buildStep) async {
+    return StringBuffer('// JSON serialization code');
+  },
+);
+</code></pre>
+<h3 id="part-file-builder">Part File Builder</h3>
+<pre class="language-dart"><code class="language-dart">final builder = CodeBuilder(
+  name: 'part_generator',
+  buildExtensions: {
+    'lib/main.dart': ['lib/main.g.dart']
+  },
+  partOf: PartOf.fromInputRelative(),
+  build: (buildStep) async {
+    return StringBuffer('// Part file content');
+  },
+);
+</code></pre>
+</section>
+
+
+    <section>
+      <dl class="dl-horizontal">
+        
+  <dt>Inheritance</dt>
+  <dd>
+    <ul class="gt-separated dark clazz-relationships">
+      <li><a href="https://api.dart.dev/stable/3.7.2/dart-core/Object-class.html">Object</a></li>
+        <li><a href="https://pub.dev/documentation/build/4.0.2/build/Builder-class.html">Builder</a></li>
+      <li>CodeBuilder</li>
+    </ul>
+  </dd>
+
+        
+        
+
+
+        
+  <dt>Available extensions</dt>
+  <dd><ul class="comma-separated clazz-relationships">
+      <li><a href="https://pub.dev/documentation/build/4.0.2/build/BuildOutputExtensions.html">BuildOutputExtensions</a></li>
+  </ul></dd>
+        
+
+
+      </dl>
+    </section>
+
+    
+  <section class="summary offset-anchor" id="constructors">
+    <h2>Constructors</h2>
+    <dl class="constructor-summary-list">
+        <dt id="CodeBuilder" class="callable">
+          <span class="name"><a href="../code_builders/CodeBuilder/CodeBuilder.html">CodeBuilder</a></span><span class="signature">({<span class="parameter" id="-param-name"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="-param-buildExtensions"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">buildExtensions</span>, </span><span class="parameter" id="-param-genMessage"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">genMessage</span> = <span class="default-value">true</span>, </span><span class="parameter" id="-param-autoFormat"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">autoFormat</span> = <span class="default-value">true</span>, </span><span class="parameter" id="-param-formatter"><span class="type-annotation"><a href="https://pub.dev/documentation/dart_style/3.1.2/dart_style/DartFormatter-class.html">DartFormatter</a>?</span> <span class="parameter-name">formatter</span>, </span><span class="parameter" id="-param-dartObjectConverters"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Type-class.html">Type</a></span>, <span class="type-parameter"><a href="../code_builders/DartObjectConverter-class.html">DartObjectConverter</a></span>&gt;</span></span> <span class="parameter-name">dartObjectConverters</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="-param-build"><span>required</span> <span class="type-annotation"><a href="../code_builders/BuildFunction.html">BuildFunction</a></span> <span class="parameter-name">build</span></span>})</span>
+        </dt>
+        <dd>
+          Creates a new <a href="../code_builders/CodeBuilder-class.html">CodeBuilder</a> with the specified configuration.
+        </dd>
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-properties">
+    <h2>Properties</h2>
+    <dl class="properties">
+        <dt id="buildExtensions" class="property">
+  <span class="name"><a href="../code_builders/CodeBuilder/buildExtensions.html">buildExtensions</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span>&gt;</span></span>&gt;</span></span>
+  
+
+</dt>
+<dd>
+  Returns the build extensions map that defines input to output file mappings.
+  <div class="features"><span class="feature">no setter</span><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="hashCode" class="property inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Object/hashCode.html">hashCode</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  The hash code for this object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="runtimeType" class="property inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Object/runtimeType.html">runtimeType</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/Type-class.html">Type</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  A representation of the runtime type of the object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-methods">
+    <h2>Methods</h2>
+    <dl class="callables">
+        <dt id="build" class="callable">
+  <span class="name"><a href="../code_builders/CodeBuilder/build.html">build</a></span><span class="signature">(<wbr><span class="parameter" id="build-param-buildStep"><span class="type-annotation"><a href="https://pub.dev/documentation/build/4.0.2/build/BuildStep-class.html">BuildStep</a></span> <span class="parameter-name">buildStep</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Executes the build process for a single input file.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="hasOutputFor" class="callable">
+  <span class="name"><a href="https://pub.dev/documentation/build/4.0.2/build/BuildOutputExtensions/hasOutputFor.html">hasOutputFor</a></span><span class="signature">(<wbr><span class="parameter" id="hasOutputFor-param-input"><span class="type-annotation"><a href="https://pub.dev/documentation/build/4.0.2/build/AssetId-class.html">AssetId</a></span> <span class="parameter-name">input</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+      <p class="from-extension">
+        <span>Available on <a href="https://pub.dev/documentation/build/4.0.2/build/Builder-class.html">Builder</a>,
+        provided by the <a href="https://pub.dev/documentation/build/4.0.2/build/BuildOutputExtensions.html">BuildOutputExtensions</a> extension</span>
+      </p>
+  Whether this builder is expected to output assets when running on <code>input</code>.
+  
+
+</dd>
+
+        <dt id="noSuchMethod" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Invoked when a nonexistent method or property is accessed.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="toString" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  A string representation of this object.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor inherited"
+      id="operators">
+    <h2>Operators</h2>
+    <dl class="callables">
+        <dt id="operator ==" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.7.2/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.7.2/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  The equality operator.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+    
+    
+    
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">code_builders</a></li>
+    <li><a href="../code_builders">code_builders</a></li>
+    <li class="self-crumb">CodeBuilder class</li>
+</ol>
+
+    <h5>code_builders library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    code_builders
+      0.1.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

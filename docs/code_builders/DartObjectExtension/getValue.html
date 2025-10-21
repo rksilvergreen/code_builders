@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the getValue method from the DartObjectExtension extension, for the Dart programming language.">
+  <title>getValue method - DartObjectExtension extension - code_builders library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">code_builders</a></li>
+    <li><a href="../../code_builders">code_builder.dart</a></li>
+    <li><a href="../../code_builders/DartObjectExtension.html">DartObjectExtension</a></li>
+    <li class="self-crumb">getValue method</li>
+  </ol>
+  <div class="self-name">getValue</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="code_builders&#47;DartObjectExtension-extension-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">getValue</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype">dynamic</span>
+<span class="name ">getValue</span>(<wbr>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Extracts the actual Dart value from this <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_constant_value/DartObject-class.html">DartObject</a>.</p>
+<p>This method automatically converts the <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_constant_value/DartObject-class.html">DartObject</a> to the appropriate
+Dart type. It handles:</p>
+<ul>
+<li>Primitive types: bool, String, int, double</li>
+<li>Collections: List, Set, Map (with recursive conversion)</li>
+<li>Functions, Types, and Symbols</li>
+<li>Custom types through registered converters</li>
+<li>Null values</li>
+</ul>
+<h2 id="returns">Returns</h2>
+<p>The converted Dart value, or <code>null</code> if the object is null.</p>
+<h2 id="throws">Throws</h2>
+<p>Throws an error if no converter is found for a custom type.</p>
+<h2 id="example">Example</h2>
+<pre class="language-dart"><code class="language-dart">final dartObject = element.computeConstantValue();
+if (dartObject != null) {
+  final value = dartObject.getValue();
+  // value is now the actual Dart value (String, int, List, etc.)
+}
+</code></pre>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">dynamic getValue() {
+  if (isNull) return null;
+
+  &#47;&#47; Try to convert to primitive types first
+  var value = toBoolValue() ??
+      toStringValue() ??
+      toIntValue() ??
+      toDoubleValue() ??
+      toListValue() ??
+      toSetValue() ??
+      toMapValue() ??
+      toFunctionValue() ??
+      toTypeValue() ??
+      toSymbolValue();
+
+  &#47;&#47; Handle collections with recursive conversion
+  if (value is List) {
+    value = value.map((i) =&gt; (i as DartObject).getValue()).toList();
+  }
+
+  if (value is Set) {
+    value = value.map((i) =&gt; (i as DartObject).getValue()).toSet();
+  }
+
+  if (value is Map) {
+    value = value.map((k, v) =&gt; MapEntry((k as DartObject).getValue(), (v as DartObject).getValue()));
+  }
+
+  &#47;&#47; Try custom converters for complex types
+  if (value == null) {
+    try {
+      DartObjectConverter dartObjectConverter = DartObjectExtension._dartObjectConverters.entries
+          .firstWhere((entry) =&gt; entry.key.toString() == type!.element!.name)
+          .value;
+      value = dartObjectConverter.convert(this);
+    } catch (e) {
+      if (e is StateError) {
+        throw &#39;DartObjectConverter not found for type ${type!.element!.name}&#39;;
+      } else
+        throw e;
+    }
+  }
+  return value;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">code_builders</a></li>
+    <li><a href="../../code_builders">code_builders</a></li>
+    <li><a href="../../code_builders/DartObjectExtension.html">DartObjectExtension</a></li>
+    <li class="self-crumb">getValue method</li>
+</ol>
+
+    <h5>DartObjectExtension extension on <a href="https://pub.dev/documentation/analyzer/8.1.1/dart_constant_value/DartObject-class.html">DartObject</a></h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    code_builders
+      0.1.0
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
