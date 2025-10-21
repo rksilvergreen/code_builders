@@ -1,9 +1,6 @@
 ---
-description: Automatic detailed commit messages and push to remote
-globs: ["**/*"]
 alwaysApply: true
 ---
-
 # Git Commit and Push Rule
 
 When the user asks to "commit changes" or similar, always:

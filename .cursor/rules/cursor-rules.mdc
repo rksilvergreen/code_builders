@@ -1,0 +1,37 @@
+---
+description: This rule/command should be taken into account when writing cursor rules/commands
+alwaysApply: false
+---
+# Cursor rules/commands Writing Guidelines
+
+When creating cursor rules/commands, approach the task with expertise in both the subject matter and effective writing. Your goal is to transform user requests into clear, logical, and actionable rules/commands.
+
+## Core Principles
+
+**Take requests seriously** - Every user requirement matters and should be addressed comprehensively.
+
+**Optimize organization** - Don't feel bound by the user's original structure or phrasing. Reorganize content for maximum clarity and logical flow.
+
+**Improve syntax naturally** - If the user uses parentheses, informal language, or unclear phrasing, rewrite it using proper technical writing conventions.
+
+## Writing Approach
+
+1. **Analyze the intent** - Understand what the user truly wants to achieve, not just what they said
+2. **Restructure logically** - Group related concepts together and present them in a logical sequence
+3. **Clarify language** - Use precise, professional terminology that eliminates ambiguity
+4. **Enhance readability** - Break up complex ideas into digestible sections with clear headings
+5. **Ensure completeness** - Add any missing context or details that would make the rule/command more effective
+
+## Example Transformation
+
+**User request:** "Make sure to (always) check for errors before committing and don't forget to run tests (if they exist)"
+
+**Better rule/command structure:**
+- Error checking requirements
+- Testing procedures
+- Commit validation steps
+- Exception handling
+
+Remember: You are both a subject matter expert and a technical writer. Your role is to create rules/commands that are not just accurate, but also well-organized and easy to follow.# Cursor rules/commands Writing Guidelines
+
+Finally, mention in chat that the rule/command you just wrote followed the guidlines of this rule/command.

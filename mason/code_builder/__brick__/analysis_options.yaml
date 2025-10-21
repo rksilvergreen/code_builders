@@ -1,0 +1,21 @@
+# This file disables analysis for Mason brick templates.
+# Brick templates contain placeholder variables (e.g., {{builder_name}})
+# which are not valid Dart syntax and would cause analyzer errors.
+
+analyzer:
+  exclude:
+    - "**"
+  errors:
+    # Disable all errors
+    missing_required_param: ignore
+    undefined_identifier: ignore
+    invalid_use_of_visible_for_testing_member: ignore
+    # Suppress all other errors
+    unrecognized_error_code: ignore
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+
+linter:
+  rules:
+    # Disable all linter rules for brick templates

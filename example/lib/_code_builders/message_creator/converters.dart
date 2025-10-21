@@ -7,11 +7,8 @@ final _dartObjectConverters = {
   Message: _messageDartObjectConverter,
 };
 
-DartObjectConverter<MessageFormat> _messageFormatDartObjectConverter =
-    DartObjectConverter<MessageFormat>((dartObject) => MessageFormat.values.firstWhere((e) {
-          var value = RegExp(r"(?<=')[^']*(?=')").stringMatch(dartObject.toString());
-          return e.name == value;
-        }));
+DartObjectConverter<MessageFormat> _messageFormatDartObjectConverter = DartObjectConverter<MessageFormat>(
+    (dartObject) => MessageFormat.values.firstWhere((e) => e.name == dartObject.variable!.name));
 
 DartObjectConverter<Extra> _extraDartObjectConverter = DartObjectConverter<Extra>((dartObject) => Extra(
       prefix: dartObject.getFieldValue('prefix') as String,
@@ -29,5 +26,3 @@ DartObjectConverter<Message> _messageDartObjectConverter = DartObjectConverter<M
       extra: dartObject.getFieldValue('extra', [_extraDartObjectConverter]) as Extra?,
       signatures: dartObject.getFieldValue('signatures', [_signatureDartObjectConverter]).cast<Signature>(),
     ));
-
-

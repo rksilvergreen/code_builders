@@ -13,4 +13,10 @@ bricks:
     path: ../../../dart_libraries/code_builder/mason/code_builder
 
 * update the pubspec.yaml in the same folder where the lib folder resides.
+to the dev_dependencies add:
+  build_runner: ^2.10.0
+  code_builders:
+    path: ../../../dart_libraries/code_builder
+
+* create a '_code_builders' folder in the lib folder.
 

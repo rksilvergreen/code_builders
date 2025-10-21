@@ -1,0 +1,2 @@
+Create a 'code-builders-new-builder' command that takes in as an argument the name of a builder. what it does is first of all if code-builders is initiated according to the code-builders-start command.
+If not then notify the user and ask them if they want to 
