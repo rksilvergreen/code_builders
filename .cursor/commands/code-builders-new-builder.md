@@ -2,6 +2,13 @@
 
 This command creates a new code builder with all required files and configuration. The command accepts the builder name as an argument and handles the complete setup process.
 
+## Documentation References
+
+- **Official Documentation**: [https://rksilvergreen.github.io/code_builders/](https://rksilvergreen.github.io/code_builders/)
+- **Working Examples**: [https://github.com/rksilvergreen/code_builders/tree/main/example](https://github.com/rksilvergreen/code_builders/tree/main/example)
+
+Refer to these resources throughout the development process for detailed API documentation and real-world implementation examples.
+
 ## Command Usage
 
 `@code-builders-new-builder <builder_name> [description]`
@@ -61,53 +68,9 @@ Create an empty file (no content).
 **With Description:**
 Generate appropriate annotation classes based on the builder's purpose. These annotations will be imported by package files to mark classes for analysis by the builder.
 
-Example for a message creator builder:
-
-```dart
-/// Marks a class to have messages generated from it
-class Message {
-  final int duplicates;
-  final MessageFormat format;
-  final Extra? extra;
-  final List<Signature> signatures;
-
-  const Message({
-    required this.duplicates,
-    required this.format,
-    this.extra,
-    required this.signatures,
-  });
-}
-
-/// Message format options
-enum MessageFormat {
-  text,
-  html,
-  markdown,
-}
-
-/// Additional metadata for messages
-class Extra {
-  final String prefix;
-  final String suffix;
-
-  const Extra({
-    required this.prefix,
-    required this.suffix,
-  });
-}
-
-/// Signature information
-class Signature {
-  final String name;
-  final bool isApproved;
-
-  const Signature({
-    required this.name,
-    required this.isApproved,
-  });
-}
-```
+**Reference**: See example annotations for complete working examples:
+- [api_endpoint annotations](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/api_endpoint/annotations.dart)
+- [copyable annotations](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/copyable/annotations.dart)
 
 **Key Principles for Annotations:**
 - Create annotation classes that represent the metadata users will provide
@@ -146,105 +109,9 @@ Generate the builder with appropriate build logic based on the description. The 
 
 **IMPORTANT**: Always use the `code_builders` package's BufferWritable classes (Class, Method, Constructor, etc.) and analyzer_extensions to simplify and structure the code generation. Avoid manual string building with StringBuffer for class/method generation.
 
-Example for a message creator builder:
-
-```dart
-import 'package:code_builders/code_builder.dart';
-import 'annotations.dart';
-
-part 'converters.dart';
-
-Builder messageCreatorBuilder(BuilderOptions options) => CodeBuilder(
-      name: 'message_creator_builder',
-      buildExtensions: {
-        '{{dir}}/{{file}}.dart': ['{{dir}}/.gen/{{file}}.gen.message_creator.dart']
-      },
-      dartObjectConverters: _dartObjectConverters,
-      build: (buildStep) async {
-        // Analyze annotated classes and generate message implementations
-        final library = buildStep.inputLibrary;
-        final buffer = StringBuffer();
-        
-        // Process each class annotated with @Message
-        for (final element in library.topLevelElements) {
-          if (element is ClassElement) {
-            final messageAnnotation = element.getAnnotation<Message>();
-            if (messageAnnotation != null) {
-              _generateMessageClass(element, messageAnnotation).writeTo(buffer);
-              buffer.writeln();
-            }
-          }
-        }
-        
-        return buffer.toString();
-      },
-    );
-
-/// Generates a message class from the annotated element using BufferWritable
-Class _generateMessageClass(ClassElement element, Message annotation) {
-  final className = element.name;
-  
-  return Class(
-    name: 'Generated$className',
-    properties: [
-      Property(
-        name: 'content',
-        type: 'String',
-        isFinal: true,
-      ),
-      Property(
-        name: 'format',
-        type: 'MessageFormat',
-        isFinal: true,
-      ),
-      Property(
-        name: 'duplicates',
-        type: 'int',
-        isFinal: true,
-        defaultValue: '${annotation.duplicates}',
-      ),
-    ],
-    constructors: [
-      Constructor(
-        isConst: true,
-        parameters: [
-          Parameter(
-            name: 'content',
-            isRequired: true,
-            isNamed: true,
-            prefix: 'this.',
-          ),
-          Parameter(
-            name: 'format',
-            isRequired: true,
-            isNamed: true,
-            prefix: 'this.',
-          ),
-          Parameter(
-            name: 'duplicates',
-            isRequired: true,
-            isNamed: true,
-            prefix: 'this.',
-          ),
-        ],
-      ),
-    ],
-    methods: [
-      Method(
-        name: 'toJson',
-        returnType: 'Map<String, dynamic>',
-        body: '''
-    return {
-      'content': content,
-      'format': format.name,
-      'duplicates': duplicates,
-    };
-    ''',
-      ),
-    ],
-  );
-}
-```
+**Reference**: See example builder implementations for complete working examples demonstrating:
+- [api_endpoint builder](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/api_endpoint/builder.dart) - Shows how to structure the build function and use BufferWritable classes
+- [copyable builder](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/copyable/builder.dart) - Demonstrates analyzer_extensions usage and helper function organization
 
 **Key Principles for Builder Logic:**
 - **Always use BufferWritable classes**: Use `Class`, `Method`, `Constructor`, `Property`, `Getter`, `Setter`, etc. from `code_builders/buffer_writable`
@@ -255,6 +122,8 @@ Class _generateMessageClass(ClassElement element, Message annotation) {
 - Call `.writeTo(buffer)` on BufferWritable objects to generate code
 - Keep code generation logic neat and readable by using structured classes instead of string concatenation
 - Return the generated code as a string
+
+For detailed API documentation on all available BufferWritable classes and their parameters, refer to the [official documentation](https://rksilvergreen.github.io/code_builders/).
 
 **Template Pattern:**
 - Replace `userValidator`/`messageCreator` with camelCase version of the builder name
@@ -275,185 +144,65 @@ final _dartObjectConverters = <Type, DartObjectConverter>{};
 **With Description:**
 Generate converters for each annotation class defined in annotations.dart. Converters translate Dart analyzer's DartObject representations into your annotation types.
 
-Example for message creator annotations:
+**Reference**: See example converters for complete working examples demonstrating:
+- [api_endpoint converters](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/api_endpoint/converters.dart) - Enum types and complex classes with nested objects
+- [copyable converters](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/copyable/converters.dart) - Simple classes with primitive fields and list fields
+
+**Converter Pattern Structure:**
 
 ```dart
 part of 'builder.dart';
 
 final _dartObjectConverters = {
-  MessageFormat: _messageFormatDartObjectConverter,
-  Extra: _extraDartObjectConverter,
-  Signature: _signatureDartObjectConverter,
-  Message: _messageDartObjectConverter,
+  TypeA: _typeADartConverterObject,
+  TypeB: _typeBDartConverterObject,
+  ...
 };
 
-// Converter for enum types - maps enum name to enum value
-DartObjectConverter<MessageFormat> _messageFormatDartObjectConverter = 
-    DartObjectConverter<MessageFormat>(
-      (dartObject) => MessageFormat.values.firstWhere(
-        (e) => e.name == dartObject.variable!.name
-      )
-    );
-
-// Converter for simple class with primitive fields
-DartObjectConverter<Extra> _extraDartObjectConverter = 
-    DartObjectConverter<Extra>(
-      (dartObject) => Extra(
-        prefix: dartObject.getFieldValue('prefix') as String,
-        suffix: dartObject.getFieldValue('suffix') as String,
-      )
-    );
-
-// Converter for class with primitive fields
-DartObjectConverter<Signature> _signatureDartObjectConverter = 
-    DartObjectConverter<Signature>(
-      (dartObject) => Signature(
-        name: dartObject.getFieldValue('name') as String,
-        isApproved: dartObject.getFieldValue('isApproved') as bool,
-      )
-    );
-
-// Converter for complex class with nested objects and lists
-DartObjectConverter<Message> _messageDartObjectConverter = 
-    DartObjectConverter<Message>(
-      (dartObject) => Message(
-        duplicates: dartObject.getFieldValue('duplicates') as int,
-        format: dartObject.getFieldValue(
-          'format', 
-          [_messageFormatDartObjectConverter]
-        ) as MessageFormat,
-        extra: dartObject.getFieldValue(
-          'extra', 
-          [_extraDartObjectConverter]
-        ) as Extra?,
-        signatures: dartObject.getFieldValue(
-          'signatures', 
-          [_signatureDartObjectConverter]
-        ).cast<Signature>(),
-      )
-    );
+DartObjectConverter<TypeA> _typeADartConverterObject = ...
+DartObjectConverter<TypeB> _typeBDartConverterObject = ...
+...
 ```
 
-**Converter Patterns:**
+**Converter Pattern Quick Reference:**
 
-1. **Enum Converters:**
-   ```dart
-   DartObjectConverter<MyEnum>(
-     (dartObject) => MyEnum.values.firstWhere(
-       (e) => e.name == dartObject.variable!.name
-     )
-   )
-   ```
+The example converters demonstrate all common patterns:
 
-2. **Simple Class Converters (primitives only):**
-   ```dart
-   DartObjectConverter<MyClass>(
-     (dartObject) => MyClass(
-       stringField: dartObject.getFieldValue('stringField') as String,
-       intField: dartObject.getFieldValue('intField') as int,
-       boolField: dartObject.getFieldValue('boolField') as bool,
-       doubleField: dartObject.getFieldValue('doubleField') as double,
-     )
-   )
-   ```
-
-3. **Complex Class Converters (with nested objects):**
-   ```dart
-   DartObjectConverter<ParentClass>(
-     (dartObject) => ParentClass(
-       primitiveField: dartObject.getFieldValue('primitiveField') as String,
-       // Pass converter for nested object as second parameter
-       nestedObject: dartObject.getFieldValue(
-         'nestedObject',
-         [_nestedObjectConverter]
-       ) as NestedClass,
-       // Nullable nested object
-       optionalNested: dartObject.getFieldValue(
-         'optionalNested',
-         [_nestedObjectConverter]
-       ) as NestedClass?,
-     )
-   )
-   ```
-
-4. **List Field Converters:**
-   ```dart
-   DartObjectConverter<MyClass>(
-     (dartObject) => MyClass(
-       // List of primitives
-       stringList: dartObject.getFieldValue('stringList').cast<String>(),
-       // List of custom objects
-       objectList: dartObject.getFieldValue(
-         'objectList',
-         [_objectConverter]
-       ).cast<CustomObject>(),
-     )
-   )
-   ```
+1. **Enum Converters** - Use `dartObject.variable!.name` to map enum values (see [api_endpoint](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/api_endpoint/converters.dart))
+2. **Simple Class Converters** - Use `dartObject.getFieldValue('fieldName')` for primitive fields (see [copyable](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/copyable/converters.dart))
+3. **Complex Class Converters** - Pass nested converters as array to `getFieldValue` for custom types (see [api_endpoint](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/api_endpoint/converters.dart))
+4. **List Field Converters** - Use `.cast<T>()` for type-safe list conversion (see [copyable](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/copyable/converters.dart))
+5. **Map Field Converters** - Use `.cast<K, V>()` for strictly typed maps
 
 **Key Principles for Converters:**
 - Create one converter per annotation type
-- Register all converters in the `_dartObjectConverters` map
+- Register all converters in the `_dartObjectConverters` map with Type as key
 - Use `dartObject.variable!.name` for enums
 - Use `dartObject.getFieldValue('fieldName')` for primitive fields
 - Pass nested converters as an array to `getFieldValue` for complex types
-- Use `.cast<T>()` for lists of custom objects
+- Use `.cast<T>()` for lists and `.cast<K, V>()` for maps
 - Handle nullable fields with `as Type?`
+
+Refer to the example implementations for detailed syntax and real-world usage:
+- [api_endpoint converters](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/api_endpoint/converters.dart)
+- [copyable converters](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/copyable/converters.dart)
 
 ### Step 4: Update build.yaml
 
 Add the new builder configuration to the `build.yaml` file under the `builders:` section.
 
-**Default Configuration Example:**
+**Reference**: See [example build.yaml](https://github.com/rksilvergreen/code_builders/blob/main/example/build.yaml) for complete working configurations showing:
+- How to configure the `api_endpoint` builder
+- How to configure the `copyable` builder
+- Proper structure for `targets` and `builders` sections
+- Configuration parameters like `import`, `builder_factories`, `build_extensions`, `auto_apply`, and `build_to`
 
-For a builder named `user_validator`, add:
-
-```yaml
-builders:
-  user_validator:
-    import: "package:example/_code_builders/user_validator/builder.dart"
-    builder_factories: ["userValidatorBuilder"]
-    build_extensions:
-      {
-        "{{dir}}/{{file}}.dart":
-          ["{{dir}}/gen/{{file}}.gen.user_validator.dart"],
-      }
-    auto_apply: none
-    build_to: source
-```
-
-**Configuration Parameters:**
-
-The above shows default parameters, but adjust based on the builder's purpose and user's description:
-
-- **`import`**: Path to the builder file (always required, use actual package name)
-- **`builder_factories`**: List of builder factory function names (always required)
-- **`build_extensions`**: Input/output file mapping
-  - Adjust output directory (e.g., `{{dir}}/.gen/` vs `{{dir}}/gen/`) based on user preference
-  - Adjust file naming pattern to match the builder's purpose
-  - Keep `{{dir}}` and `{{file}}` as literal strings
-- **`auto_apply`**: 
-  - `none` (default): Builder runs only on files specified in `targets` section
-  - `dependents`: Automatically runs on all files that depend on packages with this builder
-  - `all_packages`: Runs on all packages
-  - Adjust based on how the builder should be triggered
-- **`build_to`**: 
-  - `source` (default): Generates files in the source tree
-  - `cache`: Generates files in build cache
-  - Choose based on whether generated files should be committed
-- **`generate_for`**: Optional, can be added to specify specific files/patterns
-- **`required_inputs`**: Optional, specify file extensions this builder requires
-
-**Template Pattern:**
-- First `user_validator` is the builder key (snake_case)
-- Import path uses snake_case for directory name
-- Builder factory uses camelCase with "Builder" suffix
-- Build extensions use snake_case in the output file name
-
-**Important:** 
-- Replace `example` in the import path with the actual package name from `pubspec.yaml`
-- Configure parameters to match the user's description and intended use case
-- The default values shown are good starting points but may need adjustment
+Follow the same pattern as the examples, adjusting:
+- Builder name to match your builder (snake_case)
+- Import path to match your package name and builder directory
+- Builder factory function name (camelCase with "Builder" suffix)
+- Build extensions to match your desired output file naming pattern
+- Configuration parameters based on the builder's purpose and user's description
 
 ## Naming Convention Examples
 
@@ -521,11 +270,20 @@ After successfully creating the builder, inform the user of the next steps:
 
 ## Additional Resources
 
+**Primary References:**
+- **Official Documentation**: [https://rksilvergreen.github.io/code_builders/](https://rksilvergreen.github.io/code_builders/) - Complete API reference for all BufferWritable classes and utilities
+- **Working Examples**: [https://github.com/rksilvergreen/code_builders/tree/main/example](https://github.com/rksilvergreen/code_builders/tree/main/example) - Full implementations of builders:
+  - [api_endpoint builder](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/api_endpoint)
+  - [copyable builder](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/copyable)
+
 **Understanding Converters:**
 - Converters bridge Dart analyzer's compile-time representation to runtime objects
 - Each annotation class needs a corresponding converter
 - Nested objects require their converters to be passed as parameters
 - Lists of custom objects need explicit type casting
+- **See the example converters** for all patterns:
+  - [api_endpoint converters](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/api_endpoint/converters.dart)
+  - [copyable converters](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/copyable/converters.dart)
 
 **BufferWritable Classes (Critical):**
 - **Always use these instead of manual string building** for structured code generation
@@ -533,12 +291,16 @@ After successfully creating the builder, inform the user of the next steps:
 - Benefits: Type-safe, readable, maintainable, and automatically handles formatting
 - Pattern: Create BufferWritable objects in helper functions, then call `.writeTo(buffer)` in the build function
 - Import from: `package:code_builders/code_builder.dart`
+- **Full API details**: [https://rksilvergreen.github.io/code_builders/](https://rksilvergreen.github.io/code_builders/)
 
 **Analyzer Extensions:**
 - Use `element.getAnnotation<T>()` to retrieve typed annotations
 - Access element properties with `element.properties`, `element.methods`, etc.
 - Simplify type checking and element traversal
 - Import from: `package:code_builders/code_builder.dart` (includes analyzer extensions)
+- **Usage examples**: 
+  - [api_endpoint builder.dart](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/api_endpoint/builder.dart)
+  - [copyable builder.dart](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/copyable/builder.dart)
 
 **Builder Development Tips:**
 - Start with simple annotations and gradually add complexity only as needed
@@ -546,4 +308,7 @@ After successfully creating the builder, inform the user of the next steps:
 - Test with minimal examples before applying to larger codebases
 - Avoid over-engineering: Simple solutions are better than complex ones
 - Let BufferWritable classes handle formatting and indentation automatically
+- **Study the complete examples** to see best practices in action:
+  - [api_endpoint builder](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/api_endpoint)
+  - [copyable builder](https://github.com/rksilvergreen/code_builders/tree/main/example/lib/_code_builders/copyable)
 

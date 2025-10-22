@@ -1,7 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
 ---
-
 # Code Builders Initialization
 
 When users request to start, initialize, or implement code builders in this package, execute the following setup procedures systematically.

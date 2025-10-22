@@ -1,4 +1,4 @@
-import 'package:example/.code_builders/api_endpoint/annotations.dart';
+import 'package:example/_code_builders/api_endpoint/annotations.dart';
 
 part '.gen/api_example.gen.api_endpoint.dart';
 

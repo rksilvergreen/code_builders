@@ -18,6 +18,12 @@ This command sets up the complete code builders infrastructure for the current p
 
 ### 1. Build Configuration
 
+**If `build.yaml` already exists:**
+- Check if it contains a `targets` section with either `$default` or the package name as a key
+- If either exists, leave the file unchanged
+- If neither exists, add the `targets` section with `$default`
+
+**If `build.yaml` does not exist:**
 Create a `build.yaml` file in the package root directory with the following content:
 
 ```yaml
@@ -25,14 +31,25 @@ targets:
   $default: {}
 ```
 
+**Note:** The default target can be specified using either `$default` or the package name (e.g., if your package is `my_package`, you can use `my_package: {}` instead of `$default: {}`).
+
 ### 2. Mason Configuration
 
+**If `mason.yaml` already exists:**
+- Check if it contains a `code_builder` brick configuration with the specified git URL, ref, and path
+- If the `code_builder` brick is properly configured, leave the file unchanged
+- If the `code_builder` brick is missing or incorrectly configured, add or update it
+
+**If `mason.yaml` does not exist:**
 Create a `mason.yaml` file in the package root directory with the following content:
 
 ```yaml
 bricks:
   code_builder:
-    path: ../../../dart_libraries/code_builder/mason/code_builder
+    git:
+      url: https://github.com/rksilvergreen/code_builders.git
+      ref: v0.2.2
+      path: mason/code_builder
 ```
 
 ### 3. Package Dependencies
@@ -43,7 +60,9 @@ Update the `pubspec.yaml` file by adding the following dependencies to the `dev_
 dev_dependencies:
   build_runner: ^2.10.0
   code_builders:
-    path: ../../../dart_libraries/code_builder
+    git:
+      url: https://github.com/rksilvergreen/code_builders.git
+      ref: v0.2.2
 ```
 
 ### 4. Code Builders Directory

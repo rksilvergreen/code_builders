@@ -1,3 +1,6 @@
 bricks:
   code_builder:
-    path: ../mason/code_builder
+    git:
+      url: https://github.com/rksilvergreen/code_builders.git
+      ref: v0.2.2
+      path: mason/code_builder

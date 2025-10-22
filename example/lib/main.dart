@@ -1,4 +1,4 @@
-import 'package:example/.code_builders/copyable/annotations.dart';
+import 'package:example/_code_builders/copyable/annotations.dart';
 
 // ============================================================================
 // Example 1: Basic Copyable Class

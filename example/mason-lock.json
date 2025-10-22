@@ -1,1 +1,1 @@
-{"bricks":{"code_builder":{"path":"c:/dart_projects/dart_libraries/code_builders/mason/code_builder"}}}
+{"bricks":{"code_builder":{"git":{"url":"https://github.com/rksilvergreen/code_builders.git","path":"mason/code_builder","ref":"8aae698e4b41fb8d690deff6070aea5e57e59782"}}}}
