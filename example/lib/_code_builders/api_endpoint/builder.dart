@@ -1,4 +1,5 @@
 import 'package:code_builders/code_builder.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'annotations.dart';
 
 part 'converters.dart';
@@ -6,7 +7,7 @@ part 'converters.dart';
 Builder apiEndpointBuilder(BuilderOptions options) => CodeBuilder(
       name: 'api_endpoint',
       buildExtensions: {
-        '{{dir}}/{{file}}.dart': ['{{dir}}/.gen/{{file}}.gen.api_endpoint.dart']
+        '{{dir}}/{{file}}.dart': ['{{dir}}/_gen/{{file}}.gen.api_endpoint.dart']
       },
       dartObjectConverters: _dartObjectConverters,
       build: (buildStep) async {
@@ -165,6 +166,11 @@ void _generateMethodBody(
       headerValue = headerValue.replaceAll('{${annotation.auth!.tokenField}}', '\$${annotation.auth!.tokenField}');
     }
 
+    // Handle other parameter replacements (like apiKey)
+    if (headerValue.contains('{apiKey}')) {
+      headerValue = headerValue.replaceAll('{apiKey}', '\$apiKey');
+    }
+
     b.writeln('headers[\'$headerName\'] = \'$headerValue\';');
   }
 
@@ -197,11 +203,37 @@ void _generateMethodBody(
   b.writeln('// Make HTTP request');
   b.writeln('// In a real implementation, this would use the http package');
   b.writeln('// For now, returning mock response');
+  b.writeln('// Suppress unused variable warnings for mock implementation');
+  b.writeln('// ignore: unused_local_variable');
+  b.writeln('url; // url would be used in real HTTP call');
+  if (annotation.requestBody != null) {
+    b.writeln('// ignore: unused_local_variable');
+    b.writeln('body; // body would be used in real HTTP call');
+  }
+  b.writeln('// ignore: unused_local_variable');
+  b.writeln('headers; // headers would be used in real HTTP call');
   b.writeln();
 
   // Build response object
   final responseFields = annotation.responseMapping.fields;
-  final returnTypeName = method.returnType.element?.name ?? 'dynamic';
+
+  // Extract the actual return type from Future<T>
+  String returnTypeName;
+  if (method.returnType.element?.name == 'Future') {
+    // Get the type parameter from Future<T>
+    if (method.returnType is InterfaceType) {
+      final interfaceType = method.returnType as InterfaceType;
+      if (interfaceType.typeArguments.isNotEmpty) {
+        returnTypeName = interfaceType.typeArguments.first.element?.name ?? 'dynamic';
+      } else {
+        returnTypeName = 'dynamic';
+      }
+    } else {
+      returnTypeName = 'dynamic';
+    }
+  } else {
+    returnTypeName = method.returnType.element?.name ?? 'dynamic';
+  }
 
   b.writeln('// Parse response (mock)');
   b.writeln('final responseData = <String, dynamic>{};');

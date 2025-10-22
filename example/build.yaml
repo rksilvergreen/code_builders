@@ -9,7 +9,7 @@ builders:
     import: "package:example/_code_builders/copyable/builder.dart"
     builder_factories: ["copyableBuilder"]
     build_extensions:
-      { "{{dir}}/{{file}}.dart": ["{{dir}}/.gen/{{file}}.gen.copyable.dart"] }
+      { "{{dir}}/{{file}}.dart": ["{{dir}}/_gen/{{file}}.gen.copyable.dart"] }
     auto_apply: none
     build_to: source
 
@@ -19,7 +19,7 @@ builders:
     build_extensions:
       {
         "{{dir}}/{{file}}.dart":
-          ["{{dir}}/.gen/{{file}}.gen.api_endpoint.dart"],
+          ["{{dir}}/_gen/{{file}}.gen.api_endpoint.dart"],
       }
     auto_apply: none
     build_to: source

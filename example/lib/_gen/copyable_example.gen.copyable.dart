@@ -4,7 +4,7 @@
 part of '../copyable_example.dart';
 
 extension AddressCopyable on Address {
-  Address copyWith({String street, String city, int zipCode}) {
+  Address copyWith({String? street, String? city, int? zipCode}) {
     return Address(
       street: street ?? this.street,
       city: city ?? this.city,
@@ -14,7 +14,7 @@ extension AddressCopyable on Address {
 }
 
 extension UserCopyable on User {
-  User copyWith({String name, int? userAge, String? email, Address? address}) {
+  User copyWith({String? name, int? userAge, String? email, Address? address}) {
     return User(
       id: this.id,
       name: name ?? this.name,
@@ -38,18 +38,23 @@ extension UserCopyable on User {
 }
 
 extension ProfileCopyable on Profile {
-  Profile copyWith({String username, List<String>? tags, Map<String, dynamic>? meta, String? bio}) {
+  Profile copyWith({
+    String? username,
+    List<String>? tags,
+    Map<String, dynamic>? meta,
+    String? bio,
+  }) {
     return Profile(
       username: username ?? this.username,
-      tags: tags ?? tags?.map((e) => e).toList(),
-      metadata: meta ?? metadata != null ? Map<String, dynamic>.from(metadata!) : null,
+      tags: tags ?? (tags?.map((e) => e).toList()),
+      metadata: meta ?? (metadata != null ? Map<String, dynamic>.from(metadata!) : null),
       bio: bio ?? this.bio,
     );
   }
 }
 
-mixin CopyMixin {
-  Settings copyWith({String theme, bool notificationsEnabled, int? fontSize, String? language}) {
+mixin CopyMixin on Settings {
+  Settings copyWith({String? theme, bool? notificationsEnabled, int? fontSize, String? language}) {
     return Settings(
       theme: theme ?? this.theme,
       notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
@@ -60,7 +65,7 @@ mixin CopyMixin {
 }
 
 extension CompanyCopyable on Company {
-  Company copyWith({String name, Address headquarters, List<String> departments}) {
+  Company copyWith({String? name, Address? headquarters, List<String>? departments}) {
     return Company(
       name: name ?? this.name,
       headquarters: headquarters ?? this.headquarters,
@@ -71,8 +76,8 @@ extension CompanyCopyable on Company {
 
 extension EmployeeCopyable on Employee {
   Employee copyWith({
-    String firstName,
-    String lastName,
+    String? firstName,
+    String? lastName,
     String? dept,
     Company? company,
     List<String>? skills,
@@ -83,7 +88,7 @@ extension EmployeeCopyable on Employee {
       lastName: lastName ?? this.lastName,
       department: dept ?? this.department,
       company: company ?? this.company,
-      skills: skills ?? skills?.map((e) => e).toList(),
+      skills: skills ?? (skills?.map((e) => e).toList()),
       hireDate: this.hireDate,
     );
   }

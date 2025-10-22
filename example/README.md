@@ -144,7 +144,7 @@ This example demonstrates:
 
 3. **See generated files in:**
    ```
-   lib/.gen/main.gen.copyable.dart
+   lib/_gen/main.gen.copyable.dart
    ```
 
 4. **Run the example:**

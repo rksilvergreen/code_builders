@@ -18,10 +18,15 @@ class PostApiImpl implements PostApi {
     // Make HTTP request
     // In a real implementation, this would use the http package
     // For now, returning mock response
+    // Suppress unused variable warnings for mock implementation
+    // ignore: unused_local_variable
+    url; // url would be used in real HTTP call
+    // ignore: unused_local_variable
+    headers; // headers would be used in real HTTP call
 
     // Parse response (mock)
     final responseData = <String, dynamic>{};
-    return Future(
+    return Post(
       id: responseData['id'] as int,
       title: responseData['title'] as String,
       content: responseData['content'] as String,
@@ -51,10 +56,17 @@ class CreatePostApiImpl implements CreatePostApi {
     // Make HTTP request
     // In a real implementation, this would use the http package
     // For now, returning mock response
+    // Suppress unused variable warnings for mock implementation
+    // ignore: unused_local_variable
+    url; // url would be used in real HTTP call
+    // ignore: unused_local_variable
+    body; // body would be used in real HTTP call
+    // ignore: unused_local_variable
+    headers; // headers would be used in real HTTP call
 
     // Parse response (mock)
     final responseData = <String, dynamic>{};
-    return Future(
+    return Post(
       id: responseData['post_id'] as int,
       title: responseData['title'] as String,
       content: responseData['content'] as String,
@@ -88,10 +100,15 @@ class PostListApiImpl implements PostListApi {
     // Make HTTP request
     // In a real implementation, this would use the http package
     // For now, returning mock response
+    // Suppress unused variable warnings for mock implementation
+    // ignore: unused_local_variable
+    url; // url would be used in real HTTP call
+    // ignore: unused_local_variable
+    headers; // headers would be used in real HTTP call
 
     // Parse response (mock)
     final responseData = <String, dynamic>{};
-    return Future(
+    return PostList(
       posts: responseData['posts'] as List<Post>,
       total: responseData['total_count'] as int,
       page: responseData['current_page'] as int,
@@ -124,7 +141,7 @@ class UserApiImpl implements UserApi {
     final headers = <String, String>{};
     headers['Content-Type'] = 'application/json';
     headers['Authorization'] = 'Bearer $token';
-    headers['X-API-Key'] = '{apiKey}';
+    headers['X-API-Key'] = '$apiKey';
     headers['X-Timestamp'] = DateTime.now().toIso8601String();
 
     // Build request body
@@ -137,10 +154,17 @@ class UserApiImpl implements UserApi {
     // Make HTTP request
     // In a real implementation, this would use the http package
     // For now, returning mock response
+    // Suppress unused variable warnings for mock implementation
+    // ignore: unused_local_variable
+    url; // url would be used in real HTTP call
+    // ignore: unused_local_variable
+    body; // body would be used in real HTTP call
+    // ignore: unused_local_variable
+    headers; // headers would be used in real HTTP call
 
     // Parse response (mock)
     final responseData = <String, dynamic>{};
-    return Future(
+    return User(
       id: responseData['user_id'] as int,
       email: responseData['email_address'] as String,
       name: responseData['full_name'] as String,

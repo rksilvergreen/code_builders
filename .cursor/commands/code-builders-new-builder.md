@@ -95,7 +95,7 @@ part 'converters.dart';
 Builder userValidatorBuilder(BuilderOptions options) => CodeBuilder(
       name: 'user_validator_builder',
       buildExtensions: {
-        '{{dir}}/{{file}}.dart': ['{{dir}}/.gen/{{file}}.gen.user_validator.dart']
+        '{{dir}}/{{file}}.dart': ['{{dir}}/_gen/{{file}}.gen.user_validator.dart']
       },
       dartObjectConverters: _dartObjectConverters,
       build: (buildStep) async {

@@ -1,6 +1,6 @@
 import 'package:example/_code_builders/api_endpoint/annotations.dart';
 
-part '.gen/api_example.gen.api_endpoint.dart';
+part '_gen/api_example.gen.api_endpoint.dart';
 
 // ============================================================================
 // Example 1: Simple GET Request

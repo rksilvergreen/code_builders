@@ -7,7 +7,7 @@ part 'converters.dart';
 Builder copyableBuilder(BuilderOptions options) => CodeBuilder(
       name: 'copyable',
       buildExtensions: {
-        '{{dir}}/{{file}}.dart': ['{{dir}}/.gen/{{file}}.gen.copyable.dart']
+        '{{dir}}/{{file}}.dart': ['{{dir}}/_gen/{{file}}.gen.copyable.dart']
       },
       dartObjectConverters: _dartObjectConverters,
       build: (buildStep) async {
@@ -89,10 +89,10 @@ void _generateMixin(
   final className = classElement.name!;
   final mixinName = annotation.nameSuffix ?? '${className}CopyableMixin';
 
-  // For mixins, we don't need to declare the getters - the mixin will access
-  // fields from the class it's mixed into using 'this.fieldName'
+  // For mixins, specify the class it can be mixed into using 'on' constraint
   final mixin = Mixin(
     name: mixinName,
+    on: [className],
     methods: [
       _generateCopyWithMethod(classElement, annotation, fields),
       if (annotation.nullableStrategy == NullableStrategy.separateMethod)
@@ -124,8 +124,12 @@ Method _generateCopyWithMethod(
       final paramName = fieldAnnotation?.parameterName ?? field.name!;
       final fieldType = field.type.getDisplayString();
 
+      // Make parameter nullable if the field is nullable
+      final isNullable = field.type.nullabilitySuffix == NullabilitySuffix.question;
+      final paramType = isNullable ? fieldType : '$fieldType?';
+
       parameters.add(MethodParameter(
-        type: fieldType,
+        type: paramType,
         name: paramName,
         named: true,
       ));
@@ -133,7 +137,8 @@ Method _generateCopyWithMethod(
       // Generate assignment logic
       final customExpression = fieldAnnotation?.customCopyExpression;
       if (customExpression != null) {
-        assignments.add('${field.name}: $paramName ?? $customExpression');
+        // Wrap custom expression in parentheses to ensure proper precedence
+        assignments.add('${field.name}: $paramName ?? ($customExpression)');
       } else {
         assignments.add('${field.name}: $paramName ?? this.${field.name}');
       }
